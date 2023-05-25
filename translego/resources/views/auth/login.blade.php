@@ -1,10 +1,13 @@
 <x-guest-layout>
-    <x-jet-authentication-card>
+    <div>
+        <img src="/storage/images/login.png" alt="loginpng">
+    </div>
+    <x-authentication-card>
         <x-slot name="logo">
             <img src="/storage/icons/logo.png" alt="logo">
         </x-slot>
 
-        <x-jet-validation-errors class="mb-4" />
+        <x-validation-errors class="mb-4" />
 
         @if (session('status'))
         <div class="mb-4 font-medium text-sm text-green-600">
@@ -16,18 +19,18 @@
             @csrf
 
             <div>
-                <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-label for="email" value="{{ __('Email') }}" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
 
             <div class="mt-4">
-                <x-jet-label for="password" value="{{ __('Şifre') }}" />
-                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+                <x-label for="password" value="{{ __('Şifre') }}" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             </div>
 
             <div class="block mt-4">
                 <label for="remember_me" class="flex items-center">
-                    <x-jet-checkbox id="remember_me" name="remember" />
+                    <x-checkbox id="remember_me" name="remember" />
                     <span class="ml-2 text-sm text-gray-600">{{ __('Beni Hatırla') }}</span>
                 </label>
             </div>
@@ -39,14 +42,14 @@
                 </a>
                 @endif
 
-                <x-jet-button class="ml-4">
+                <x-button class="ml-4">
                     {{ __('Giriş Yap') }}
-                </x-jet-button>
+                </x-button>
             </div>
 
             <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ url('/register') }}">
                 {{ __('Henüz kaydınız yok mu?') }}
             </a>
         </form>
-    </x-jet-authentication-card>
+    </x-authentication-card>
 </x-guest-layout>
