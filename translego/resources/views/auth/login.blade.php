@@ -1,7 +1,4 @@
 <x-guest-layout>
-    <div>
-        <img src="/storage/images/login.png" alt="loginpng">
-    </div>
     <x-authentication-card>
         <x-slot name="logo">
             <img src="/storage/icons/logo.png" alt="logo">
