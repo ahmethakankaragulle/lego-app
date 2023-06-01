@@ -516,6 +516,8 @@
             margin-left: 20px;
         }
     </style>
+
+
     <script>
         function initComparisons() {
             var x, i;
@@ -607,8 +609,6 @@
 </head>
 
 <body class="antialiased">
-
-
 
     <div class="content" style="width:100%; padding-top:100px;background-color:#ffff;">
 
