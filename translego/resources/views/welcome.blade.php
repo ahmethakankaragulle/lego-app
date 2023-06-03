@@ -609,7 +609,7 @@
 </head>
 
 <body class="antialiased">
-
+    @include('layouts.header')
     <div class="content" style="width:100%; padding-top:100px;background-color:#ffff;">
 
         <div class="row" style="padding-left:4rem; padding-right:4rem;">
