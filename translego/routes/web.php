@@ -30,3 +30,7 @@ Route::middleware([
 Route::get('/editor', function () {
     return view('image-editor');
 });
+
+Route::get('/products', function () {
+    return view('products-list');
+});
