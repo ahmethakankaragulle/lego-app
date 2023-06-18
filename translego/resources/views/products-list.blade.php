@@ -394,18 +394,20 @@
         .filter-bar{
             display:flex; 
             justify-content: flex-end;
+            position: fixed;
             padding: 10px;
-            padding-right: 100px;
+            margin-top: 2px;
+            padding-right: 5%;
             width:100%; 
-            height:10%;
+            height:7%;
         }
         .product-list{
             display:flex; 
-            justify-content: space-around;
+            justify-content: space-between;
             flex-wrap: wrap;
             width:100%; 
             height:100%; 
-            padding:2%
+            padding:5%
         }
         .product-card{
             width: 250px;
@@ -416,8 +418,7 @@
             background-color:white; 
             border: 1px solid #ADADAD;
             border-radius: 5px;
-            margin: 25px;
-        
+            margin-bottom: 50px;
         }
         .product-card a{
             padding:8px;
@@ -473,8 +474,25 @@
 
     <div>
         <div class="filter-bar">
+
+            <div class="input-group w-25" style="align-items:center;">
+                
+                <input type="text" class="form-control" placeholder="Ürün ara" aria-label="Ürün ara" aria-describedby="basic-addon2" style="max-width:300px; max-height:50px; border-radius:18px;">
+                
+                <div class="input-group-append" style="margin-left:15px;margin-right:50px;">
+                    <button class="btn btn-outline-secondary" type="button">Ara</button>
+                </div>
+
+                <select class="form-select">
+                    <option>Tümü</option>
+                    <option>Lego tuğlaları</option>
+                    <option>Taban plakaları</option>
+                    <option>Çerçeveler</option>
+                </select>
+            </div>
             
         </div>
+
 
         <div class="product-list">
             <div class="product-card">
