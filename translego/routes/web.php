@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,4 @@ Route::get('/editor', function () {
     return view('image-editor');
 });
 
-Route::get('/products', function () {
-    return view('products-list');
-});
+Route::get('/products', [ProductController::class, 'listActiveProducts']);

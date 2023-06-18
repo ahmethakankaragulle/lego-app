@@ -16,6 +16,8 @@ return [
     |
     */
 
+    'DB' => 'Illuminate\Support\Facades\DB::class',
+
     'name' => env('APP_NAME', 'Laravel'),
 
     /*

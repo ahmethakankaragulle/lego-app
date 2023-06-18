@@ -398,12 +398,13 @@
             padding: 10px;
             margin-top: 2px;
             padding-right: 5%;
+            padding-left: 5%;
             width:100%; 
             height:7%;
         }
         .product-list{
             display:flex; 
-            justify-content: space-between;
+            justify-content: center;
             flex-wrap: wrap;
             width:100%; 
             height:100%; 
@@ -419,6 +420,7 @@
             border: 1px solid #ADADAD;
             border-radius: 5px;
             margin-bottom: 50px;
+            margin-right:40px;
         }
         .product-card a{
             padding:8px;
@@ -471,19 +473,18 @@
 <body class="antialiased">
 
     @include('layouts.header')
-
     <div>
         <div class="filter-bar">
 
-            <div class="input-group w-25" style="align-items:center;">
+            <div class="input-group w-100" style="align-items:center; justify-content:end;">
                 
-                <input type="text" class="form-control" placeholder="Ürün ara" aria-label="Ürün ara" aria-describedby="basic-addon2" style="max-width:300px; max-height:50px; border-radius:18px;">
+                <input type="text" class="form-control" placeholder="Ürün ara" aria-label="Ürün ara" aria-describedby="basic-addon2" style="max-width:250px; max-height:50px; border-radius:18px;">
                 
                 <div class="input-group-append" style="margin-left:15px;margin-right:50px;">
-                    <button class="btn btn-outline-secondary" type="button">Ara</button>
+                    <button class="btn btn-outline-secondary" type="button" style="background-color:#f8fafc;">Ara</button>
                 </div>
 
-                <select class="form-select">
+                <select class="form-select" style="max-width:200px;">
                     <option>Tümü</option>
                     <option>Lego tuğlaları</option>
                     <option>Taban plakaları</option>
@@ -493,99 +494,22 @@
             
         </div>
 
-
         <div class="product-list">
+            @foreach ($products as $product)
             <div class="product-card">
                 <a href="">
                     <div class="product-image">
-                        <img src="/storage/shop-products/tabanplaka-beyaz-2.png" alt="">
+                        <img src="{{$product->image_path}}" alt="">
                     </div>
                     <div class="product-name">
-                        Taban Plaka - Beyaz
+                        {{ $product->name }}
                     </div>
                     <div class="product-price">
-                        15₺
+                        {{ $product->price }}
                     </div>
                 </a>
             </div>
-            <div class="product-card">
-                <a href="">
-                    <div class="product-image">
-                        <img src="/storage/shop-products/tabanplaka-beyaz-2.png" alt="">
-                    </div>
-                    <div class="product-name">
-                        Taban Plaka - Beyaz lı lı lı lı lı
-                    </div>
-                    <div class="product-price">
-                        15₺
-                    </div>
-                </a>
-            </div>
-            <div class="product-card">
-                <a href="">
-                    <div class="product-image">
-                        <img src="/storage/shop-products/tabanplaka-beyaz-2.png" alt="">
-                    </div>
-                    <div class="product-name">
-                        Taban Plaka - Beyaz
-                    </div>
-                    <div class="product-price">
-                        15₺
-                    </div>
-                </a>
-            </div>
-            <div class="product-card">
-                <a href="">
-                    <div class="product-image">
-                        <img src="/storage/shop-products/tabanplaka-beyaz-2.png" alt="">
-                    </div>
-                    <div class="product-name">
-                        Taban Plaka - Beyaz
-                    </div>
-                    <div class="product-price">
-                        15₺
-                    </div>
-                </a>
-            </div>
-            <div class="product-card">
-                <a href="">
-                    <div class="product-image">
-                        <img src="/storage/shop-products/tabanplaka-beyaz-2.png" alt="">
-                    </div>
-                    <div class="product-name">
-                        Taban Plaka - Beyaz
-                    </div>
-                    <div class="product-price">
-                        15₺
-                    </div>
-                </a>
-            </div>
-            <div class="product-card">
-                <a href="">
-                    <div class="product-image">
-                        <img src="/storage/shop-products/tabanplaka-beyaz-2.png" alt="">
-                    </div>
-                    <div class="product-name">
-                        Taban Plaka - Beyaz
-                    </div>
-                    <div class="product-price">
-                        15₺
-                    </div>
-                </a>
-            </div>
-            <div class="product-card">
-                <a href="">
-                    <div class="product-image">
-                        <img src="/storage/shop-products/tabanplaka-beyaz-2.png" alt="">
-                    </div>
-                    <div class="product-name">
-                        Taban Plaka - Beyaz
-                    </div>
-                    <div class="product-price">
-                        15₺
-                    </div>
-                </a>
-            </div>
+            @endforeach
 
         </div>
         
