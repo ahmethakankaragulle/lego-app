@@ -402,10 +402,12 @@
         .img-section{
             width: 30%;
             align-items: center;
+            display: flex;
+            justify-content: center
         }
         .img-section img{
-            width: 100%;
-            max-height: 500px;
+            width: 400px;
+            max-height: 400px;
             height: auto;
             object-fit: cover;
         }
@@ -479,12 +481,12 @@
     @include('layouts.header')
     <div class="containers">
         <div class="img-section px-5">
-            <img class="border border-dark" src="/storage/shop-products/tabanplaka-beyaz-2.png" alt="Ürün görseli">
+            <img class="border border-dark" src="{{$product->image_path}}" alt="Ürün görseli">
         </div>
 
         <div class="add-section px-5">
             <div class="header border-bottom mb-4">
-                <h2 class="font-weight-bold">Taban Plaka - Beyaz</h2>
+                <h2 class="font-weight-bold">{{$product->name}}</h2>
             </div>
             <div class="options-price">
                 
@@ -511,7 +513,7 @@
                 </div>
 
                 <div class="price">
-                    <p>15₺</p>
+                    <p>{{$product->price}}₺</p>
                 </div>
             </div>
 
@@ -524,9 +526,19 @@
             <div class="head mb-4">
                 <h3>Ürün Detayları</h3>
             </div>
+            @if ($product->category_id == '1')
             <div class="detail">
                 Taban plakası, Lego parçalarının inşa edileceği temel bir platformdur. Bu platform, Lego parçalarını bir arada tutmak ve tablonuzu oluşturmak için kullanılır. Yüksek kaliteli esnek plastikten üretilmiştir. Farklı renk seçenekleri mevcuttur.
             </div>
+            @elseif ($product->category_id == '2')
+            <div class="detail">
+                Taban plakası, Lego parçalarının inşa edileceği temel bir platformdur. Bu platform, Lego parçalarını bir arada tutmak ve tablonuzu oluşturmak için kullanılır. Yüksek kaliteli esnek plastikten üretilmiştir. Farklı renk seçenekleri mevcuttur.
+            </div>
+            @elseif ($product->category_id == '3')
+            <div class="detail">
+                Taban plakası, Lego parçalarının inşa edileceği temel bir platformdur. Bu platform, Lego parçalarını bir arada tutmak ve tablonuzu oluşturmak için kullanılır. Yüksek kaliteli esnek plastikten üretilmiştir. Farklı renk seçenekleri mevcuttur.
+            </div>
+            @endif
         </div>
         
     </div>

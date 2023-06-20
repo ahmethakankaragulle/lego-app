@@ -497,7 +497,7 @@
         <div class="product-list">
             @foreach ($products as $product)
             <div class="product-card">
-                <a href="">
+                <a href="{{ route('product-detail', ['id' => $product->id]) }}">
                     <div class="product-image">
                         <img src="{{$product->image_path}}" alt="">
                     </div>

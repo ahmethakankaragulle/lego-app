@@ -12,4 +12,11 @@ class ProductController extends Controller
         $products=Product::where("is_active",1)->get();
         return view('products-list', compact('products'));
     }
+
+    public function productDetail($id)
+    {
+        $product = Product::find($id);
+
+        return view('product-detail', compact('product'));
+    }
 }
