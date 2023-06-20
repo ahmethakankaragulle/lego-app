@@ -46,3 +46,7 @@ Route::get('/product', function () {
 Route::get('/products', [ProductController::class, 'listActiveProducts']);
 
 Route::get('/product/{id}', [ProductController::class, 'productDetail'])->name('product-detail');
+
+Route::get('/orders', function () {
+    return view('my-orders');
+});
