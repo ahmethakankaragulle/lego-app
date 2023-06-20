@@ -32,4 +32,8 @@ Route::get('/editor', function () {
     return view('image-editor');
 });
 
+Route::get('/product', function () {
+    return view('product-detail');
+});
+
 Route::get('/products', [ProductController::class, 'listActiveProducts']);
