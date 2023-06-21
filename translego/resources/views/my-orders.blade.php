@@ -391,14 +391,15 @@
             padding-top: 4.5rem;
 
         }
+
         .accordion {
             background-color: #eee;
             color: #444;
             padding: 10px 10px;
             margin-bottom: 10px;
-            width: 60%;
+            width: 100%;
             text-align: left;
-            border: solid 1px;
+            box-shadow: 0px 0px 20px -8px gray;
             outline: none;
             transition: 0.4s;
             display: flex;
@@ -417,7 +418,7 @@
             background-color: #eee;
             color: #000;
             text-align: left;
-            width: 60%;
+            width: 100%;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.2s ease-out;
@@ -437,15 +438,14 @@
 <body class="antialiased">
 
     @include('layouts.header')
-    <div class="containers">
-        <div class="header">
-            <h2>Siparişlerim</h2>
+    <div class="container px-5 py-5">
+        <div class="header py-2">
+            <h1>Siparişlerim</h1>
         </div>
 
-        <div class="filter">
-            <p class="text-primary">Sipariş Durumu</p>
-            <div class="input-group w-50" style="align-items:center; justify-content:space-around;">
-    
+        <div class="filter py-1">
+            <p class="text-primary mb-0">Sipariş Durumu</p>
+            <div class="input-group w-100">
                 <select class="form-select" style="max-width:100px;">
                     <option selected disabled>Tümü</option>
                     <option value="1">Tamamlananlar</option>
@@ -454,22 +454,28 @@
             </div>
         </div>
 
-        <div class="orders">
+        <div class="orders py-3">
                 <div class="accordion">
-                    <div style="width:15%">
-                        <img class="accbutton" src="/storage/images/1.png" alt="Ürün Görseli" width="80px" style="border:solid black 0.2px; border-radius:50%;  cursor:pointer;">
-                    </div>
-                    <div style="width:30%">
+                    <div class="d-flex flex-row">
                         <div>
-                            <p>Sipariş No <strong>12345601</strong></p>
+                            <img class="accbutton" src="/storage/images/1.png" alt="Ürün Görseli" width="80px" style="border:solid black 0.2px; border-radius:50%;  cursor:pointer;">
                         </div>
-                        <div>
-                            <p>2 Nisan 2023, Pazar</p>
+                        <div class="mx-5">
+                            <div>
+                                <p>Sipariş No <strong>12345601</strong></p>
+                            </div>
+                            <div>
+                                <p>2 Nisan 2023, Pazar</p>
+                            </div>
                         </div>
                     </div>
-                    <div style="width:15%">
-                        <p>Sipariş Tamamlandı</p>
+                    
+
+                    <div class="w-15 d-flex flex-row align-middle">
+                        <img src="/storage/icons/ok-circle-filled-svgrepo-com.svg" alt="" width="30">
+                        <p style="margin-bottom: 0; margin-left:10px;">Sipariş Tamamlandı</p>
                     </div>
+
                     <div>
                         <p class="text-success">550.00 TL</p>
                     </div>
@@ -487,30 +493,30 @@
                     </div>
                 </div>
 
-                <div class="panel d-flex flex-row">
-                    <div>
-                        <div>
-                            <img src="/storage/images/1.png" alt="Ürün görseli" style="border:solid black 0.2px; width:200px;">
+                <div class="panel d-flex flex-row justify-content-between">
+                    <div class="d-flex flex-row p-4 w-60" style="border-right: 1px solid #a1a1a1">
+                        <div class="p-1">
+                            <img src="/storage/images/1.png" alt="Ürün görseli" style="border:solid black 0.2px; width:200px; height:200px;">
                         </div>
-                        <div>
-                            <h3>Özel Tasarım 4x4 Tablo Malzeme Paketi </h5>
+                        <div class="p-2">
+                            <h4>Özel Tasarım 4x4 Tablo Malzeme Paketi </h4>
                             <h5>Paket İçeriği:</h5>
                             <p>Lego Parçaları, Taban Plakaları ve Alüminyum Çerçeve</p>
                         </div>
                     </div>
 
-                    <div>
-                        <div>
-                            <img src="" alt="">
-                            <div>
+                    <div class="d-flex flex-column p-4 w-40 justify-content-between">
+                        <div class="d-flex flex-row">
+                            <img src="/storage/icons/package-packing-svgrepo-com.svg" width="70px" alt="" >
+                            <div style="margin-left:30px;">
                                 <p>Teslim Edildi</p>
                                 <p>Teslim Tarihi 5 Nisan 2023, Çarşamba</p>
                             </div>
                         </div>
 
                         <div>
-                            <img src="" alt="">
-                            <a href="">Kargo Takibi</a>
+                            
+                            <a style="text-decoration: none; color:#444;" href=""> <img src="/storage/icons/cargo-truck-svgrepo-com.svg" width="60px" alt=""> <span style="margin-left:30px; font-weight:600;" >Kargo Takibi</span></a>
                         </div>
                     </div>
 
@@ -530,7 +536,7 @@
             if (panel.style.maxHeight) {
                 panel.style.maxHeight = null;
             } else {
-                panel.style.maxHeight = panel.scrollHeight + "px";
+                panel.style.maxHeight = 400 + "px";
             }
         });
     }
