@@ -9,7 +9,7 @@ class OrderItem extends Model
 {
     use HasFactory;
 
-    protected $table = "order_item";
+    protected $table = "orderitem";
 
     protected $casts = [
         'data' => 'array',
@@ -20,4 +20,14 @@ class OrderItem extends Model
         'product_id',
         'data'
     ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

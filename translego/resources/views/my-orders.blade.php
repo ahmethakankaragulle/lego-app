@@ -428,6 +428,9 @@
             fill: white;
             cursor: pointer;
         }
+        p{
+            margin-bottom: 0 !important;
+        }
 
     </style>
 
@@ -439,15 +442,15 @@
 
     @include('layouts.header')
     <div class="container px-5 py-5">
-        <div class="header py-2">
+        <div class="header pb-5 pt-2">
             <h1>Siparişlerim</h1>
         </div>
 
         <div class="filter py-1">
             <p class="text-primary mb-0">Sipariş Durumu</p>
             <div class="input-group w-100">
-                <select class="form-select" style="max-width:100px;">
-                    <option selected disabled>Tümü</option>
+                <select class="form-select" style="max-width:190px;">
+                    <option selected>Tümü</option>
                     <option value="1">Tamamlananlar</option>
                     <option value="2">Sipariş sürecindekiler</option>
                 </select>
@@ -455,72 +458,87 @@
         </div>
 
         <div class="orders py-3">
-                <div class="accordion">
-                    <div class="d-flex flex-row">
-                        <div>
-                            <img class="accbutton" src="/storage/images/1.png" alt="Ürün Görseli" width="80px" style="border:solid black 0.2px; border-radius:50%;  cursor:pointer;">
-                        </div>
-                        <div class="mx-5">
-                            <div>
-                                <p>Sipariş No <strong>12345601</strong></p>
-                            </div>
-                            <div>
-                                <p>2 Nisan 2023, Pazar</p>
-                            </div>
-                        </div>
-                    </div>
-                    
+            
+            @foreach($orders as $order)
+            <ul>
+                @foreach($order->orderItems as $orderItem)
 
-                    <div class="w-15 d-flex flex-row align-middle">
-                        <img src="/storage/icons/ok-circle-filled-svgrepo-com.svg" alt="" width="30">
-                        <p style="margin-bottom: 0; margin-left:10px;">Sipariş Tamamlandı</p>
-                    </div>
-
-                    <div>
-                        <p class="text-success">550.00 TL</p>
-                    </div>
-
-                    <div>
-                        <button class="accbutton" style="position: absolute; right:10px; bottom:40%; padding:0;">
-                            <svg width="20px" height="20px" viewBox="-102.4 -102.4 1228.80 1228.80" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#185ADB" stroke="#185ADB" stroke-width="47.104">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="8.192"></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <path d="M903.232 256l56.768 50.432L512 768 64 306.432 120.768 256 512 659.072z" fill="#185ADB"></path>
-                                </g>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="panel d-flex flex-row justify-content-between">
-                    <div class="d-flex flex-row p-4 w-60" style="border-right: 1px solid #a1a1a1">
-                        <div class="p-1">
-                            <img src="/storage/images/1.png" alt="Ürün görseli" style="border:solid black 0.2px; width:200px; height:200px;">
-                        </div>
-                        <div class="p-2">
-                            <h4>Özel Tasarım 4x4 Tablo Malzeme Paketi </h4>
-                            <h5>Paket İçeriği:</h5>
-                            <p>Lego Parçaları, Taban Plakaları ve Alüminyum Çerçeve</p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex flex-column p-4 w-40 justify-content-between">
+                <div class="order">
+                    <div class="accordion">
                         <div class="d-flex flex-row">
-                            <img src="/storage/icons/package-packing-svgrepo-com.svg" width="70px" alt="" >
-                            <div style="margin-left:30px;">
-                                <p>Teslim Edildi</p>
-                                <p>Teslim Tarihi 5 Nisan 2023, Çarşamba</p>
+                            <div>
+                                <img class="accbutton" src="{{$orderItem->product->image_path}}" alt="Ürün Görseli" width="80px" style="border:solid black 0.2px; border-radius:50%;">
                             </div>
+                            <div class="mx-5">
+                                <div>
+                                    <p>Sipariş No <strong>123456{{$order->id}}</strong></p>
+                                </div>
+                                <div>
+                                    <p>{{$order->created_at}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="w-15 d-flex flex-row align-middle">
+                            <img src="/storage/icons/ok-circle-filled-svgrepo-com.svg" alt="" width="30">
+                            <p style="margin-left:10px;">Sipariş Tamamlandı</p>
                         </div>
 
                         <div>
-                            
-                            <a style="text-decoration: none; color:#444;" href=""> <img src="/storage/icons/cargo-truck-svgrepo-com.svg" width="60px" alt=""> <span style="margin-left:30px; font-weight:600;" >Kargo Takibi</span></a>
+                            <p class="text-success">{{ $orderItem->product->price }} TL</p>
+                        </div>
+
+                        <div>
+                            <button class="accbutton" style="position: absolute; right:10px; bottom:40%; padding:0;">
+                                <svg width="20px" height="20px" viewBox="-102.4 -102.4 1228.80 1228.80" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#185ADB" stroke="#185ADB" stroke-width="47.104">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="8.192"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path d="M903.232 256l56.768 50.432L512 768 64 306.432 120.768 256 512 659.072z" fill="#185ADB"></path>
+                                    </g>
+                                </svg>
+                            </button>
                         </div>
                     </div>
 
+                    <div class="panel d-flex flex-row justify-content-between">
+
+                        <div class="d-flex flex-row flex-wrap p-4 w-60" style="border-right: 1px solid #a1a1a1">
+                            <div class="p-1">
+                                <img src="{{$orderItem->product->image_path}}" alt="Ürün görseli" style="border:solid black 0.2px; width:200px; height:200px;">
+                            </div>
+                            <div class="p-2">
+                                <h4>{{$orderItem->product->name}} </h4>
+                                <h5>Paket İçeriği:</h5>
+                                <p>{{$orderItem->product->name}} </p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column p-4 w-40 justify-content-between">
+                            <div class="d-flex flex-row flex-wrap">
+                                <img src="/storage/icons/package-packing-svgrepo-com.svg" width="70px" alt="" >
+                                <div style="margin-left:30px;">
+                                    <p>{{$order->status}}</p>
+                                    <p>{{$order->updated_at}}</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <a style="text-decoration: none; color:#444;" href=""> <img src="/storage/icons/cargo-truck-svgrepo-com.svg" width="60px" alt=""> <span style="margin-left:30px; font-weight:600;" >Kargo Takibi</span></a>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
+                @endforeach
+            </ul>
+            @endforeach
+
+
+            
+            
+
         </div>
     </div>
 </body>
