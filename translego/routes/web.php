@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\MessageController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +60,4 @@ Route::get('/order-list', [OrderController::class, 'listAllOrders']);
 
 Route::get('/product-list', [ProductController::class, 'listAllProducts']);
 
-Route::get('/messages', function () {
-    return view('messages');
-});
+Route::get('/messages', [MessageController::class, 'listAllMessage']);

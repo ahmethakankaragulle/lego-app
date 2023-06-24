@@ -415,7 +415,7 @@
             <h1>Müşteri Mesajları</h1>
         </div>
 
-        <div class="filter py-1 d-flex flex-row">
+        <div class="filter py-1 d-flex flex-row justify-content-start">
 
             <div class="input-group d-flex flex-column">
                 <p class="text-primary mb-0">Müşteri Adı</p>
@@ -435,20 +435,25 @@
         </div>
 
         <div class="messages mt-5">
-            <div class="message bg-white shadow d-flex flex-row">
-                <div class="p-3" style="border-right: solid 1px #8266ff">
+            @foreach ($messages as $message)
+            <div class="message bg-white shadow d-flex flex-row mb-2">
+                <div class="p-3 w-100" style="border-right: solid 1px #8266ff">
                     <div class="d-flex mb-2" style="align-items: center">
-                        <h3 class="text-capitalize m-0">Müşteri Adı</h3>
-                        <span class="mx-3">2 Nisan 2023, Pazar</span>
+                        <h3 class="text-capitalize m-0">{{$message->name}}</h3>
+                        <span class="mx-3">{{$message->created_at}}</span>
                     </div>
                     <div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere hic nam eius voluptatem reiciendis deserunt, non voluptas tempore dignissimos architecto doloribus exercitationem eum rem nesciunt quidem, vero explicabo cum quisquam.
+                        {{$message->message}}
                     </div>
                 </div>
 
                 <div class="p-3 d-flex flex-column justify-content-center">
                     <div class="text-center mb-2">
-                        Cevaplandı
+                        @if ($message->status == 0)
+                            <span class="text-danger text-center">Cevaplanmadı</span>
+                        @else
+                            <span class="text-success text-center">Cevaplandı</span>
+                        @endif
                     </div>
                     <div class="d-flex">
                         <button type="button" class="btn btn-primary btn-sm"><img src="storage/icons/mail-right-arrow-svgrepo-com.svg" height="20px" alt="Mesaj Gönder"></button>
@@ -456,6 +461,7 @@
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 </body>
