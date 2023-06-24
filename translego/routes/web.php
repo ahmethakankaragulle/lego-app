@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,4 @@ Route::get('/orders', function () {
     ]);
 })->middleware('auth');
 
-Route::get('/order-list', function () {
-    return view('order-list');
-});
+Route::get('/order-list', [OrderController::class, 'listAllOrders']);

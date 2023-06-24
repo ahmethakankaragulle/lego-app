@@ -408,7 +408,9 @@
 
 <body class="antialiased">
     @include('layouts.header')
+
     <div class="container px-5 py-5">
+
         <div class="header pb-5 pt-2">
             <h1>Siparişlerim</h1>
         </div>
@@ -453,18 +455,23 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="text-primary font-weight-bold">#12345601</td>
-                <td>Mark</td>
-                <td class="text-success font-weight-bold">Tamamlandı</td>
-                <td>15TL</td>
-                <td>12.12.2023</td>
-                <td>15.12.2023</td>
-                <td>
-                    <button type="button" class="btn btn-primary btn-sm"><img src="storage/icons/pencil-ui-svgrepo-com.svg" height="20px" alt="Güncelle"></button>
-                    <button type="button" class="btn btn-danger btn-sm"> <img src="/storage/icons/garbage-trash-svgrepo-com.svg" height="20px" alt="Sil"></button>
-                </td>
-              </tr>
+                @foreach($orders as $order)
+                    @foreach($order->orderItems as $orderItem)
+                        <tr>
+                            <td class="text-primary font-weight-bold">#123456{{$order->id}}</td>
+                            <td>{{$order->user->name}}</td>
+                            <td class="text-success font-weight-bold">{{$order->status}}</td>
+                            <td>{{ $orderItem->product->price }} TL</td>
+                            <td>{{$order->created_at}}</td>
+                            <td>{{$order->updated_at}}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm"><img src="storage/icons/pencil-ui-svgrepo-com.svg" height="20px" alt="Güncelle"></button>
+                                <button type="button" class="btn btn-danger btn-sm"> <img src="/storage/icons/garbage-trash-svgrepo-com.svg" height="20px" alt="Sil"></button>
+                            </td>
+                        </tr>
+                
+                    @endforeach
+                @endforeach
             </tbody>
           </table>
     

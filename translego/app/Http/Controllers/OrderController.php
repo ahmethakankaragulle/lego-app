@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class OrderController extends Controller
 {
@@ -18,5 +19,10 @@ class OrderController extends Controller
                 // Ürün bilgilerini kullanarak gerekli işlemleri yapabilirsiniz.
             }
         }
+    }
+
+    public function listAllOrders(){
+        $orders= Order::get();
+        return view('order-list', compact('orders'));
     }
 }
