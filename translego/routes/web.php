@@ -57,3 +57,7 @@ Route::get('/orders', function () {
 Route::get('/order-list', [OrderController::class, 'listAllOrders']);
 
 Route::get('/product-list', [ProductController::class, 'listAllProducts']);
+
+Route::get('/messages', function () {
+    return view('messages');
+});
