@@ -55,3 +55,5 @@ Route::get('/orders', function () {
 })->middleware('auth');
 
 Route::get('/order-list', [OrderController::class, 'listAllOrders']);
+
+Route::get('/product-list', [ProductController::class, 'listAllProducts']);

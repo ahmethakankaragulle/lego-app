@@ -412,7 +412,7 @@
     <div class="container px-5 py-5">
 
         <div class="header pb-5 pt-2">
-            <h1>Siparişlerim</h1>
+            <h1>Sipariş Listesi</h1>
         </div>
 
         <div class="filter py-1 d-flex flex-row">
