@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function listActiveProducts(){
         $products=Product::where("is_active",1)->get();
-        return view('products-list', compact('products'));
+        return view('products', compact('products'));
     }
 
     public function productDetail($id)

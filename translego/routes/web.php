@@ -30,7 +30,7 @@ Route::middleware([
 
 Route::get('/editor', function () {
     return view('image-editor');
-});
+})->middleware('auth');
 
 Route::get('/sepet', function () {
     return view('cart')->with([
@@ -51,4 +51,8 @@ Route::get('/orders', function () {
     return view('my-orders')->with([
         'orders' => auth()->user()->orders()->whereStatus(0)->get()
     ]);
+})->middleware('auth');
+
+Route::get('/order-list', function () {
+    return view('order-list');
 });

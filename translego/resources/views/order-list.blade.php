@@ -392,38 +392,6 @@
 
         }
 
-        .accordion {
-            background-color: #eee;
-            color: #444;
-            padding: 10px 10px;
-            margin-bottom: 10px;
-            width: 100%;
-            text-align: left;
-            box-shadow: 0px 0px 20px -8px gray;
-            outline: none;
-            transition: 0.4s;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            font-size: 20px;
-        }
-
-        .panel {
-            padding: 0px 18px;
-            margin-top: -10px;
-            margin-bottom: 10px;
-            background-color: #eee;
-            color: #000;
-            text-align: left;
-            width: 100%;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.2s ease-out;
-        }
-
         svg:hover {
             fill: white;
             cursor: pointer;
@@ -439,123 +407,74 @@
 </head>
 
 <body class="antialiased">
-
     @include('layouts.header')
     <div class="container px-5 py-5">
         <div class="header pb-5 pt-2">
             <h1>Siparişlerim</h1>
         </div>
 
-        <div class="filter py-1">
-            <p class="text-primary mb-0">Sipariş Durumu</p>
-            <div class="input-group w-100">
-                <select class="form-select" style="max-width:190px;">
+        <div class="filter py-1 d-flex flex-row">
+            <div class="input-group d-flex flex-column">
+                <p class="text-primary mb-0 w-0">Sipariş Durumu</p>
+                <select class="form-select" style="width:190px;">
                     <option selected>Tümü</option>
                     <option value="1">Tamamlananlar</option>
                     <option value="2">Sipariş sürecindekiler</option>
                 </select>
             </div>
+            <div class="input-group d-flex flex-column">
+                <p class="text-primary mb-0">Sipariş Numarası</p>
+                <input type="text" class="form-control" placeholder="Sipariş Numarası" aria-label="SiparişNumarası" aria-describedby="basic-addon1" style="width:190px;">
+            </div>
+            <div class="input-group d-flex flex-column">
+                <p class="text-primary mb-0">Müşteri Adı</p>
+                <input type="text" class="form-control" placeholder="Müşteri Adı" aria-label="MüşteriAdı" aria-describedby="basic-addon1" style="width:190px;">
+            </div>
+
+            <div class="input-group d-flex flex-column">
+                <p class="text-primary mb-0">Tutarı</p>
+                <input type="text" class="form-control" placeholder="Tutarı" aria-label="Tutarı" aria-describedby="basic-addon1" style="width:190px;">
+            </div>
+            
+            <button type="button" class="btn btn-primary">Ara <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Search_Magnifying_Glass"> <path id="Vector" d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg> </button>
         </div>
 
-        <div class="orders py-3">
-            
-            @foreach($orders as $order)
-                @foreach($order->orderItems as $orderItem)
-
-                <div class="order">
-                    <div class="accordion">
-                        <div class="d-flex flex-row">
-                            <div>
-                                <img class="accbutton" src="{{$orderItem->product->image_path}}" alt="Ürün Görseli" width="80px" height="80px" style="border:solid black 0.2px; border-radius:50%;">
-                            </div>
-                            <div class="mx-5">
-                                <div>
-                                    <p>Sipariş No <strong>123456{{$order->id}}</strong></p>
-                                </div>
-                                <div>
-                                    <p>{{$order->created_at}}</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-
-                        <div class="w-15 d-flex flex-row align-middle">
-                            <img src="/storage/icons/ok-circle-filled-svgrepo-com.svg" alt="" width="30">
-                            <p style="margin-left:10px;">Sipariş Tamamlandı</p>
-                        </div>
-
-                        <div>
-                            <p class="text-success">{{ $orderItem->product->price }} TL</p>
-                        </div>
-
-                        <div>
-                            <button class="accbutton" style="position: absolute; right:10px; bottom:40%; padding:0;">
-                                <svg width="20px" height="20px" viewBox="-102.4 -102.4 1228.80 1228.80" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#185ADB" stroke="#185ADB" stroke-width="47.104">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="8.192"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <path d="M903.232 256l56.768 50.432L512 768 64 306.432 120.768 256 512 659.072z" fill="#185ADB"></path>
-                                    </g>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="panel d-flex flex-row justify-content-start">
-
-                        <div class="d-flex flex-row flex-wrap p-4 w-50" style="border-right: 1px solid #a1a1a1">
-                            <div class="p-1">
-                                <img src="{{$orderItem->product->image_path}}" alt="Ürün görseli" style="border:solid black 0.2px; width:200px; height:200px;">
-                            </div>
-                            <div class="p-2">
-                                <h4>{{$orderItem->product->name}} </h4>
-                                <h5>Paket İçeriği:</h5>
-                                <p>{{$orderItem->product->name}} </p>
-                            </div>
-                        </div>
-
-                        <div class="d-flex flex-column p-4 w-50 justify-content-between">
-                            <div class="d-flex flex-row flex-wrap">
-                                <img src="/storage/icons/package-packing-svgrepo-com.svg" width="70px" alt="" >
-                                <div style="margin-left:30px;">
-                                    <p>{{$order->status}}</p>
-                                    <p>{{$order->updated_at}}</p>
-                                </div>
-                            </div>
-
-                            <div>
-                                <a style="text-decoration: none; color:#444;" href=""> <img src="/storage/icons/cargo-truck-svgrepo-com.svg" width="60px" alt=""> <span style="margin-left:30px; font-weight:600;" >Kargo Takibi</span></a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                @endforeach
-            @endforeach
-
-
-            
-            
-
+        <div class="table mt-5">
+            <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Sipariş No</th>
+                <th scope="col">Müşteri Adı</th>
+                <th scope="col">Durumu</th>
+                <th scope="col">Tutarı</th>
+                <th scope="col">Eklenme Tarihi</th>
+                <th scope="col">Güncellenme Tarihi</th>
+                <th scope="col">İşlemler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-primary font-weight-bold">#12345601</td>
+                <td>Mark</td>
+                <td class="text-success font-weight-bold">Tamamlandı</td>
+                <td>15TL</td>
+                <td>12.12.2023</td>
+                <td>15.12.2023</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm"><img src="storage/icons/pencil-ui-svgrepo-com.svg" height="20px" alt="Güncelle"></button>
+                    <button type="button" class="btn btn-danger btn-sm"> <img src="/storage/icons/garbage-trash-svgrepo-com.svg" height="20px" alt="Sil"></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    
         </div>
-    </div>
+        </div>
 </body>
 
-<script>
-    var acc = document.getElementsByClassName("accbutton");
-    var i;
 
-    for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var panel = this.parentElement.parentElement.nextElementSibling;
-            if (panel.style.maxHeight) {
-                panel.style.maxHeight = null;
-            } else {
-                panel.style.maxHeight = 400 + "px";
-            }
-        });
-    }
+<script>
+
 </script>
 
 </html>
