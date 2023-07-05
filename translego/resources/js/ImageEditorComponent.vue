@@ -361,16 +361,10 @@
             },
 
             postData(){
-                console.log("IMAGE ---->" +this.product);
-                console.log(this.data);
-
                 axios.post('/art/push', {
                     image: this.product,
                     data: this.data
                 }).then((response) => {
-                    console.log("GEÇERLİ")
-                    console.log("RESPONSE --->"+response);
-                    console.log("İD ->"+ response.data.pop().id)
                     axios.post('/basket/push', {
                         art_id: response.data.pop().id,
                     }).then(() => {

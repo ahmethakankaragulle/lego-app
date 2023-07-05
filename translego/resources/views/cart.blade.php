@@ -443,27 +443,22 @@
 
             <h1 class="display-4 text-dark" style="text-align: center; margin:3rem 1rem;">Sepetiniz</h1>
             <div style="display: flex; flex-direction:column;align-items:center;">
-                @foreach($baskets as $key=>$basket)
                 <?php $a = 0 ?>
+
+                @foreach($baskets as $key=>$basket)
+                @if($basket->item_type == 1)
+                <?php $art = \App\Models\UserArt::find($basket->item_id); ?>
+
                 <div class="accordion">
                     <div style="width:15%">
-                        <?php
-                        $imagesource = "/storage/products/deneme.png";
-                        $productid = $basket->product_id;
-                        foreach ($products as $product) {
-                            if ($product->id == $basket->product_id) {
-                                $imagesource = $product->imagedata;
-                            }
-                        }
-                        ?>
-                        <img class="accbutton" src="{{$imagesource}}" alt="" width="80px" style="border:solid black 0.5px; cursor:pointer;">
+                        <img class="accbutton" src="{{$art->image}}" alt="" width="80px" style="border:solid black 0.5px; cursor:pointer;">
                     </div>
                     <div style="width:50%">
-                        {{ $basket->name }}
+                        {{ $art->name }}
                     </div>
                     <div style="width:15%">
-                        {{ $basket->price }}₺
-                        <?php $a += $basket->price ?>
+                        {{ $art->price }}₺
+                        <?php $a += $art->price ?>
                     </div>
                     <div>
                         <a href="{{ route('sepet.sil' , [$basket->id]) }}">
@@ -511,7 +506,7 @@
                 </div>
 
                 <div class="panel">
-                    @foreach($basket->data as $d)
+                    @foreach($art->data as $d)
                     <div style="padding: 4px;">
                         <?php echo '<div style="background-color:#', ($d[2]), ';color:#', ($d[2]), '; width:20px;display:inline-block;padding:0px 5p;">O</div>' ?>
                         {{($d[3])}} Adet #{{($d[2])}} Renk kodlu 1x1 Lego parçası
@@ -519,33 +514,110 @@
                     @endforeach
 
                 </div>
-                @endforeach
-
-                @if(empty($basket))
-                <div style="color:#000; font-size:30px;">
-                    Sepetinizde ürün yok !
-                </div>
-                <div style="position: absolute; right:38%; bottom:5%;">
-                    <img src="/storage/images/empty-cart.png" alt="">
-                </div>
                 @else
-                <div style="width:60%; text-align:right; margin-top:2rem; margin-bottom:10rem;">
 
-                    <div style="color:black; text-align:right; margin-bottom:4rem; font-size:20px; ">
-                        Toplam tutar: <strong>{{$a}}₺</strong>
-                    </div>
-                    <a href="/adres" class="btn btn-lg btn-primary"> <span>DEVAM</span> </a>
+                <?php $product = \App\Models\Product::find($basket->item_id); ?>
 
-                    <div style="z-index:-1; position:absolute; top:25%; right:5%;">
-                        <img src="/storage/images/full-cart.png" alt="" width="200px">
+                <div class="accordion">
+                    <div style="width:15%">
+                        <img class="accbutton" src="{{$product->image_path}}" alt="" width="80px" style="border:solid black 0.5px; cursor:pointer;">
                     </div>
-                    @endif
+                    <div style="width:50%">
+                        {{ $product->name }}
+                    </div>
+                    <div style="width:15%">
+                        {{ $product->price }}₺
+                        <?php $a += $art->price ?>
+                    </div>
+                    <div>
+                        <a href="{{ route('sepet.sil' , [$basket->id]) }}">
+                            <svg fill="#185ADB" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" width="35px" height="35px">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <g>
+                                        <g>
+                                            <rect x="166.4" y="230.4" width="25.6" height="204.8"></rect>
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <rect x="243.2" y="230.4" width="25.6" height="204.8"></rect>
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <rect x="320" y="230.4" width="25.6" height="204.8"></rect>
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <path d="M422.4,51.2H320V25.6C320,11.46,308.54,0,294.4,0h-76.8C203.46,0,192,11.46,192,25.6v25.6H89.6 C75.46,51.2,64,62.66,64,76.8V128c0,14.14,11.46,25.6,25.6,25.6v332.8c0,14.14,11.46,25.6,25.6,25.6h281.6 c14.14,0,25.6-11.46,25.6-25.6V153.6c14.14,0,25.6-11.46,25.6-25.6V76.8C448,62.66,436.54,51.2,422.4,51.2z M217.6,25.6h76.8v25.6 h-76.8V25.6z M396.8,486.4H115.2V153.6h281.6V486.4z M422.4,128H89.6V76.8h332.8V128z"></path>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                        </a>
+                        @csrf
+                    </div>
+
+                    <div>
+                        <button class="accbutton" style="position: absolute; right:10px; bottom:40%; padding:0;">
+                            <svg width="20px" height="20px" viewBox="-102.4 -102.4 1228.80 1228.80" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#185ADB" stroke="#185ADB" stroke-width="47.104">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="8.192"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M903.232 256l56.768 50.432L512 768 64 306.432 120.768 256 512 659.072z" fill="#185ADB"></path>
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
+
+                < class="panel d-flex flex-row justify-content-start">
+
+                    <div class="d-flex flex-row flex-wrap p-4 w-50" style="border-right: 1px solid #a1a1a1">
+                        <div class="p-1">
+                            <img src="{{$orderItem->product->image_path}}" alt="Ürün görseli" style="border:solid black 0.2px; width:200px; height:200px;">
+                        </div>
+                        <div class="p-2">
+                            <h4>{{product->name}} </h4>
+                            <h5>Paket İçeriği:</h5>
+                            <p>{{product->name}} </p>
+                        </div>
+                    </div>
+
             </div>
+            @endif
 
 
+            @endforeach
 
+            @if(empty($basket))
+            <div style="color:#000; font-size:30px;">
+                Sepetinizde ürün yok !
+            </div>
+            <div style="position: absolute; right:38%; bottom:5%;">
+                <img src="/storage/images/empty-cart.png" alt="">
+            </div>
+            @else
+            <div style="width:60%; text-align:right; margin-top:2rem; margin-bottom:10rem;">
+
+                <div style="color:black; text-align:right; margin-bottom:4rem; font-size:20px; ">
+                    Toplam tutar: <strong>{{$a}}₺</strong>
+                </div>
+                <a href="/adres" class="btn btn-lg btn-primary"> <span>DEVAM</span> </a>
+
+                <div style="z-index:-1; position:absolute; top:25%; right:5%;">
+                    <img src="/storage/images/full-cart.png" alt="" width="200px">
+                </div>
+                @endif
+            </div>
         </div>
+
+
+
+    </div>
     </div>
 
     <script>
