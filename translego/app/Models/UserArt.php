@@ -5,16 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Basket extends Model
+class UserArt extends Model
 {
     use HasFactory;
 
+    protected $table = "user_arts";
+
     protected $fillable = [
         'user_id',
-        'item_id',
-        'item_type',
-        'count',
-        'status'
+        'price',
+        'name',
+        'price',
+        'image',
+        'data'
+    ];
+
+    protected $casts = [
+        'data' => 'array'
     ];
 
     public function user()
@@ -22,13 +29,8 @@ class Basket extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function product()
+    public function basket()
     {
-        return $this->belongsTo(Product::class);
-    }
-
-    public function arts()
-    {
-        return $this->belongsTo(UserArt::class);
+        return $this->belongsTo(Basket::class);
     }
 }

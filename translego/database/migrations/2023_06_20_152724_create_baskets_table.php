@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('baskets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('product_id');
-            $table->text('data');
-            $table->string('name');
+            $table->unsignedBigInteger('item_id');
+            $table->integer('item_type');
+            $table->integer('count')->default(1);
             $table->integer('status')->default(0);
             $table->timestamps();
         });

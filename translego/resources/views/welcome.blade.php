@@ -652,7 +652,7 @@
                         <img src="/storage/images/1.png" width="500" height="500">
                     </div>
                     <div class="img-comp-img img-comp-overlay">
-                        <img src="/storage/images/33.png" width="500" height="500">
+                        <img src="/storage/images/33.jpg" width="500" height="500">
                     </div>
                 </div>
             </div>

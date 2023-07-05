@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\MessageController;
+use Intervention\Image\Facades\Image as Image;
 
 
 /*
@@ -37,8 +38,7 @@ Route::get('/editor', function () {
 
 Route::get('/sepet', function () {
     return view('cart')->with([
-        'baskets' => auth()->user()->baskets()->whereStatus(0)->get(),
-        'products' => auth()->user()->products()->whereStatus(0)->get(),
+        'baskets' => auth()->user()->baskets()->whereStatus(0)->get()
     ]);
 })->middleware('auth');
 
@@ -61,3 +61,38 @@ Route::get('/order-list', [OrderController::class, 'listAllOrders']);
 Route::get('/product-list', [ProductController::class, 'listAllProducts']);
 
 Route::get('/messages', [MessageController::class, 'listAllMessage']);
+
+
+Route::post('/art/push', function (\Illuminate\Http\Request $request) {
+
+    $filename = (string) auth()->user()->id . "-" . now()->format('Y-m-dHis');
+    $dataurl = "storage/arts/" . $filename . ".png";
+    $image = Image::make($request->image)->encode('png');
+    $image->save($dataurl);
+    $pieces = $request->collect('data')->sum(function ($item) {
+        return $item[3];
+    });
+    $request->user()->arts()->create([
+        'user_id' => auth()->user()->id,
+        'image' => $dataurl,
+        'data' => $request->data,
+        'price' => $pieces * 0.2,
+        'name' => "{$pieces} parça TransLego paketi"
+    ]);
+
+    return $request->user()->arts()->whereStatus(0)->get();
+})->middleware('auth');
+
+
+//Route::post('/art/push', [UserArtController::class, 'create']);
+
+Route::post('/basket/push', function (\Illuminate\Http\Request $request) {
+
+    $request->user()->baskets()->create([
+        'user_id' => auth()->user()->id,
+        'item_id' => $request->art_id,
+        'item_type' => 1,
+        'count' => 1,
+    ]);
+    return $request->user()->baskets()->whereStatus(0)->get();
+})->middleware('auth');

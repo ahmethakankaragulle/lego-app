@@ -129,11 +129,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="b in basket" :key="b.id">
-                        <td>{{ b[0] }}</td>
-                        <td>{{ b[1] }}</td>
-                        <td>#{{ b[2] }}</td>
-                        <td>{{ b[3] }}</td>
+                        <tr v-for="d in data" :key="d.id">
+                        <td>{{ d[0] }}</td>
+                        <td>{{ d[1] }}</td>
+                        <td>#{{ d[2] }}</td>
+                        <td>{{ d[3] }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -161,7 +161,7 @@
                 range: 6,
                 temp: null,
                 product: "",
-                basket:[],
+                data:[],
                 pricing: 0,
                 sepetmesajı: "Ürün başarıyla sepetinize eklenmiştir!",
                 login:false,
@@ -186,7 +186,7 @@
                 let bg = new Image();
                 bg.src = this.previewImage;
                 let val = document.getElementById('customRange2')
-                this.basket = [];
+                this.data = [];
                 this.colorReduction(8-parseInt(val.value));
                 document.getElementById('pills-edit-tab').click();
             },
@@ -223,7 +223,7 @@
                             const pixelIndexPosition = (x + y * iw) * 4;
                             //console.log(data[pixelIndexPosition],data[pixelIndexPosition+1],data[pixelIndexPosition+2]);
                             let minIndex = this.getColorWithPalette(data[pixelIndexPosition],data[pixelIndexPosition+1],data[pixelIndexPosition+2]);
-                            this.addBasket(minIndex);
+                            this.addData(minIndex);
                             sayı += 1;
                             ctx.fillStyle = `rgba(
                             ${this.brickColor[minIndex].rgb[0]},
@@ -333,12 +333,12 @@
 
             },
 
-            addBasket(index){
+            addData(index){
                 var product = []
                 var newproduct = true;
-                for(var i = 0; i<this.basket.length; i++){
-                    if(this.brickColor[index].id == this.basket[i][0]){
-                        this.basket[i][3] += 1;
+                for(var i = 0; i<this.data.length; i++){
+                    if(this.brickColor[index].id == this.data[i][0]){
+                        this.data[i][3] += 1;
                         newproduct = false;
                         break;
                     }
@@ -348,51 +348,54 @@
                     product[1] = this.brickColor[index].id;
                     product[2] = this.brickColor[index].hex;
                     product[3] = 1;
-                    this.basket.push(product);
+                    this.data.push(product);
                 }   
             },
 
             calculatePricing(){
                 var totalPiece = 0;
-                for(let i = 0 ; i<this.basket.length; i++){
-                    totalPiece += this.basket[i][3];
+                for(let i = 0 ; i<this.data.length; i++){
+                    totalPiece += this.data[i][3];
                 }
                 this.pricing = Number((totalPiece*0.2).toFixed(2)); 
             },
 
             postData(){
-                console.log(this.product.length);
-                    axios.post('/product/push', {
-                        imagedata: this.product
-                    }).then((response) => {
-                        console.log(response);
-                        axios.post('/basket/push', {
-                        product_id: response.data.pop().id,
-                        data: this.basket
-                        }).then(() => {
-                            this.login=true
-                            document.getElementById('pills-addcart-tab').click();
-                        }).catch((error) => { 
-                            if (error) {
-                                console.log(error.response.data);
-                                this.login=false
-                                this.sepetmesajı = 'Sepete ürün eklemek için giriş yapmalısınız !'
-                                document.getElementById('pills-addcart-tab').click();
-                            }  
-                        })   
+                console.log("IMAGE ---->" +this.product);
+                console.log(this.data);
 
+                axios.post('/art/push', {
+                    image: this.product,
+                    data: this.data
+                }).then((response) => {
+                    console.log("GEÇERLİ")
+                    console.log("RESPONSE --->"+response);
+                    console.log("İD ->"+ response.data.pop().id)
+                    axios.post('/basket/push', {
+                        art_id: response.data.pop().id,
+                    }).then(() => {
+                        this.login=true
+                        document.getElementById('pills-addcart-tab').click();
                     }).catch((error) => { 
                         if (error) {
                             console.log(error.response.data);
-
                             this.login=false
-                            if(error.response.status == '401')
-                                this.sepetmesajı = 'Sepete ürün eklemek için giriş yapmalısınız !'
-                            else
-                                this.sepetmesajı = 'Maalesef bu ürün sepete eklenemiyor !'
+                            this.sepetmesajı = 'Sepete ürün eklemek için giriş yapmalısınız !'
                             document.getElementById('pills-addcart-tab').click();
                         }  
-                    })      
+                    })   
+
+                }).catch((error) => { 
+                    if (error) {
+                        console.log(error.response.data);
+                        this.login=false
+                        if(error.response.status == '401')
+                            this.sepetmesajı = 'Sepete ürün eklemek için giriş yapmalısınız !'
+                        else
+                            this.sepetmesajı = 'Maalesef bu ürün sepete eklenemiyor daha sonra tekrar deneyin!'
+                        document.getElementById('pills-addcart-tab').click();
+                    }  
+                })
 
             }
         }
