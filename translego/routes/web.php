@@ -97,7 +97,7 @@ Route::get('/sepet', function () {
     ]);
 })->middleware('auth');
 
-Route::get('/adres', function () {
+Route::get('/adres-bilgileri', function () {
     return view('address');
 });
 
@@ -105,53 +105,70 @@ Route::get('/payment', function () {
     return view('payment');
 });
 
-Route::get('/ödeme', function (\Illuminate\Http\Request $request) {
-    $request->validate([
-        'full-name' => 'required|string|max:130|min:6',
-        'state-address-region' => 'min:10|max:255|string',
-        'telephone' => "starts_with:05|max:13|min:10",
-    ]);
+Route::post('/kart-bilgileri', function (\Illuminate\Http\Request $request) {
+    $request->validate(
+        [
+            'full-name' => 'required|string|max:130|min:5',
+            'telephone' => "required|starts_with:05|max:13|min:10",
+            'address' => 'required|min:10|max:255|string',
+        ],
+        [
+            'full_name.required' => 'Adınız ve soyadınız alanı zorunludur.',
+            'telephone.required' => 'Telefon numarası alanı zorunludur.',
+            'address.required' => 'Tam adres alanı zorunludur.',
+        ]
+    );
 
-    session(['address' => $request]);
+    session(['phone' => $request->input('telephone')]);
+    session(['name' => $request->input('full-name')]);
+    session(['address' => $request->input('address')]);
 
     return view('payment');
-});
+})->name('kart.bilgileri');
+
 
 Route::post('/sepet/onayla', function (\Illuminate\Http\Request $request) {
 
     $request->validate([
-        'kart_numarasi' => 'required|credit_card',
-        'ay' => 'required|numeric|between:1,12',
-        'yıl' => 'required|numeric|between:2023,2053',
+        'name' => 'required|string|max:130|min:6',
+        'cart_number' => 'required|numeric|digits:16',
+        'month' => 'required|numeric|between:1,12',
+        'year' => 'required|numeric|between:2023,2053',
         'cvv' => 'required|digits:3',
     ]);
 
-    $order = new Order();
-    $product = auth()->user()->products()->whereStatus(0)->get()->first();
 
-    $basket = auth()->user()->baskets()->whereStatus(0)->get();
-    $order->price = $basket->sum('price');
+    $order = new \App\Models\Order();
     $order->user_id = auth()->user()->id;
-    $order->phone = $request->telephone;
-    $order->address = $request->get('state-adress-region');
-    $order->name = $request->get('full-name');
-    $order->status = 1;
+    $order->name = session('name');
+    $order->phone = session('phone');
+    $order->address = session('address');
+    $order->cargo_tracking = 'Kargo Bilgisi Bulunmuyor';
     $order->save();
 
-    $basket->each(function ($basket) use ($order, $product) {
-        $orderItems = new OrderItem();
-        $orderItems->order_id = $order->id;
-        $orderItems->product_id = $product->id;
-        $orderItems->data = $basket->data;
-        $orderItems->save();
-    });
+    $baskets = auth()->user()->baskets()->whereStatus(0)->get();
+    foreach ($baskets as $basket) {
+        $order_item = new \App\Models\OrderItem();
 
+        $item_type = $basket->item_type;
+        $order_item->order_id = $order->id;
+        $order_item->item_id = $basket->item_id;
+        $order_item->item_type = $item_type;
+        $order_item->count = $basket->count;
 
-    $basket->each(fn ($basket) => $basket->update(['status' => 1]));
-    $product->each(fn ($product) => $product->update(['status' => 1]));
+        if ($item_type == 1) {
+            $art = \App\Models\UserArt::find($basket->item_id);
+            $order_item->price = $art->price;
+            $order_item->save();
+        } else {
+            $product = \App\Models\Product::find($basket->item_id);
+            $order_item->price = $product->price;
+            $order_item->save();
+        }
+    }
 
     return view('orderscomplete');
-})->name('sepet.onay');
+})->name('ödeme.onay');
 
 
 

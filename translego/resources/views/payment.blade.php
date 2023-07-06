@@ -441,7 +441,7 @@
                                     </div>
                                     <div class="row mb-4">
                                         <div class="col">
-                                            <input type="text" class="form-control" id="inputNumber" name="number" placeholder="Kart Numarası">
+                                            <input type="text" class="form-control" id="inputNumber" name="cart_number" placeholder="Kart Numarası">
                                         </div>
                                     </div>
                                     <div class="row mb-4">

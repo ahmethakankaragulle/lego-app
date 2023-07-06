@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orderitem', function (Blueprint $table) {
+        Schema::create('order_item', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('product_id');
-            $table->integer('type');
+            $table->unsignedBigInteger('item_id');
+            $table->integer('item_type');
             $table->integer('count');
             $table->integer('price');
             $table->timestamps();
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orderitem');
+        Schema::dropIfExists('order_item');
     }
 };

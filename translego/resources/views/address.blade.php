@@ -432,7 +432,7 @@
                     @endif
                     <div class="row">
                         <div class="col-xs-12">
-                            <form class="form-horizontal" role="form" method="post" action="{{ route('ödeme') }}">
+                            <form class="form-horizontal" role="form" method="post" action="{{ route('kart.bilgileri') }}">
                                 @csrf
                                 <div class="form-group">
                                     <div class="col-sm-10">
@@ -443,16 +443,15 @@
 
                                 <div class="form-group">
                                     <div class="col-sm-10">
-
                                         <label for="inputTelephone" class="col-sm-2 control-label">Telefon Numarası</label>
-                                        <input type="text" class="form-control" id="inputTelephone" name="telephone" placeholder="Telefon Numaranız">
+                                        <input type="text" class="form-control" id="inputTelephone" name="telephone" placeholder="Telefon Numaranız" type="tel">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="inputFullAddress" class="col-sm-2 control-label">Tam Adres</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputFullAddress" name="state-adress-region" placeholder="Tam adres">
+                                        <label for="inputFullAddress" class="col-sm-2 control-label">Tam Adres</label>
+                                        <input type="text" class="form-control" id="inputFullAddress" name="address" placeholder="Tam adres">
                                     </div>
                                 </div>
                                 <div style="width: 82%; text-align:right; margin-top:4rem;">

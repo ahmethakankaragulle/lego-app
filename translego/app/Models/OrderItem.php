@@ -9,16 +9,14 @@ class OrderItem extends Model
 {
     use HasFactory;
 
-    protected $table = "orderitem";
-
-    protected $casts = [
-        'data' => 'array',
-    ];
+    protected $table = "order_item";
 
     protected $fillable = [
         'order_id',
-        'product_id',
-        'data'
+        'item_id',
+        'item_type',
+        'count',
+        'price'
     ];
 
     public function order()

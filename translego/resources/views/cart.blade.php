@@ -606,7 +606,7 @@
                 <div style="color:black; text-align:right; margin-bottom:4rem; font-size:20px; ">
                     Toplam tutar: <strong>{{$a}}₺</strong>
                 </div>
-                <a href="/adres" class="btn btn-lg btn-primary"> <span>DEVAM</span> </a>
+                <a href="/adres-bilgileri" class="btn btn-lg btn-primary"> <span>DEVAM</span> </a>
 
                 <div style="z-index:-1; position:absolute; top:25%; right:5%;">
                     <img src="/storage/images/full-cart.png" alt="" width="200px">
