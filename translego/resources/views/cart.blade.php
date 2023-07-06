@@ -444,8 +444,8 @@
             <h1 class="display-4 text-dark" style="text-align: center; margin:3rem 1rem;">Sepetiniz</h1>
             <div style="display: flex; flex-direction:column;align-items:center;">
                 <?php $a = 0 ?>
-
                 @foreach($baskets as $key=>$basket)
+
                 @if($basket->item_type == 1)
                 <?php $art = \App\Models\UserArt::find($basket->item_id); ?>
 

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title name="header">Sepet</title>
+    <title name="header">Adres Bilgileri</title>
 
     <!-- Fonts -->
 
@@ -389,16 +389,17 @@
         body {
             font-family: 'Nunito', sans-serif;
             padding-top: 4.5rem;
-
         }
 
-        svg:hover {
-            fill: white;
-            cursor: pointer;
+        .content {
+            color: black;
         }
 
-        p {
-            margin-bottom: 0 !important;
+        label {
+            color: black;
+            text-align: left;
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
         }
     </style>
 
@@ -407,89 +408,98 @@
 </head>
 
 <body class="antialiased">
+
     @include('layouts.header')
 
-    <div class="container px-5 py-5">
+    <div class="content" style="padding:30px 0px;">
+        <div class="container" style="align-items: flex-end;">
+            <h1 class="display-4 text-dark" style="text-align: left; margin:3rem 1rem;">Ödeme Bilgileri</h1>
+            <div>
+                <div class="container" style="text-align: left; color:red;">
+                    @if($errors->any())
+                    <div class="row">
+                        <div class="col">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                <li>
+                                    {{ $error }}
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    @endif
+                    <div class="row w-50">
+                        <div class="col">
+                            <form class="form-horizontal" role="form" method="post" action="{{ route('ödeme.onay') }}">
+                                @csrf
+                                <div class="form-group">
+                                    <div class="row mb-4">
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="inputName" name="name" placeholder="Kart Üzerindeki İsim">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="inputNumber" name="number" placeholder="Kart Numarası">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col">
+                                            <select class="form-control" id="inputMounth" name="month">
+                                                <option selected disabled>Ay</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                                <option>11</option>
+                                                <option>11</option>
+                                            </select>
+                                        </div>
 
-        <div class="header pb-5 pt-2">
-            <h1>Sipariş Listesi</h1>
-        </div>
+                                        <div class="col">
+                                            <select class="form-control" id="inputYear" name="year" placeholder="Yıl">
+                                                <option selected disabled>Yıl</option>
+                                                <option>2023</option>
+                                                <option>2024</option>
+                                                <option>2025</option>
+                                                <option>2026</option>
+                                                <option>2027</option>
+                                                <option>2028</option>
+                                                <option>2029</option>
+                                                <option>2030</option>
+                                            </select>
+                                        </div>
 
-        <div class="filter py-1 d-flex flex-row">
-            <div class="input-group d-flex flex-column">
-                <p class="text-primary mb-0 w-0">Sipariş Durumu</p>
-                <select class="form-select" style="width:190px;">
-                    <option selected>Tümü</option>
-                    <option value="1">Tamamlananlar</option>
-                    <option value="2">Sipariş sürecindekiler</option>
-                </select>
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="inputCVV" name="cvv" placeholder="CVV">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="width: 100%; text-align:right; margin-top:4rem;">
+                                    <button class="btn btn-lg btn-primary"> <span>ONAYLA</span> </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <div style="position: absolute; right:5%; bottom:40%">
+                        <img src="/storage/images/address-map.png" alt="location">
+                    </div>
+
+                </div>
             </div>
-            <div class="input-group d-flex flex-column">
-                <p class="text-primary mb-0">Sipariş Numarası</p>
-                <input type="text" class="form-control" placeholder="Sipariş Numarası" aria-label="SiparişNumarası" aria-describedby="basic-addon1" style="width:190px;">
-            </div>
-            <div class="input-group d-flex flex-column">
-                <p class="text-primary mb-0">Müşteri Adı</p>
-                <input type="text" class="form-control" placeholder="Müşteri Adı" aria-label="MüşteriAdı" aria-describedby="basic-addon1" style="width:190px;">
-            </div>
-
-            <div class="input-group d-flex flex-column">
-                <p class="text-primary mb-0">Tutarı</p>
-                <input type="text" class="form-control" placeholder="Tutarı" aria-label="Tutarı" aria-describedby="basic-addon1" style="width:190px;">
-            </div>
-
-            <button type="button" class="btn btn-primary">Ara <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                    <g id="SVGRepo_iconCarrier">
-                        <g id="Interface / Search_Magnifying_Glass">
-                            <path id="Vector" d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </g>
-                    </g>
-                </svg> </button>
-        </div>
-
-        <div class="table mt-5">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">Sipariş No</th>
-                        <th scope="col">Müşteri Adı</th>
-                        <th scope="col">Durumu</th>
-                        <th scope="col">Tutarı</th>
-                        <th scope="col">Eklenme Tarihi</th>
-                        <th scope="col">Güncellenme Tarihi</th>
-                        <th scope="col">İşlemler</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($orders as $order)
-                    @foreach($order->orderItems as $orderItem)
-                    <tr>
-                        <td class="text-primary font-weight-bold">#123456{{$order->id}}</td>
-                        <td>{{$order->user->name}}</td>
-                        <td class="text-success font-weight-bold">{{$order->status}}</td>
-                        <td>{{ $orderItem->product->price }} TL</td>
-                        <td>{{$order->created_at}}</td>
-                        <td>{{$order->updated_at}}</td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm"><img src="storage/icons/pencil-ui-svgrepo-com.svg" height="20px" alt="Güncelle"></button>
-                            <button type="button" class="btn btn-danger btn-sm"> <img src="/storage/icons/garbage-trash-svgrepo-com.svg" height="20px" alt="Sil"></button>
-                        </td>
-                    </tr>
-
-                    @endforeach
-                    @endforeach
-                </tbody>
-            </table>
-
         </div>
     </div>
+
 </body>
-
-
-<script>
-
-</script>
 
 </html>

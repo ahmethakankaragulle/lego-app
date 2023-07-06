@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('order', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->string('name');
+            $table->string('phone');
             $table->string('address');
+            $table->string('cargo_tracking');
             $table->integer('status')->default(0);
             $table->timestamps();
         });

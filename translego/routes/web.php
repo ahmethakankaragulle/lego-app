@@ -101,12 +101,29 @@ Route::get('/adres', function () {
     return view('address');
 });
 
-Route::post('/sepet/onayla', function (Request $request) {
+Route::get('/payment', function () {
+    return view('payment');
+});
 
+Route::get('/ödeme', function (\Illuminate\Http\Request $request) {
     $request->validate([
         'full-name' => 'required|string|max:130|min:6',
         'state-address-region' => 'min:10|max:255|string',
         'telephone' => "starts_with:05|max:13|min:10",
+    ]);
+
+    session(['address' => $request]);
+
+    return view('payment');
+});
+
+Route::post('/sepet/onayla', function (\Illuminate\Http\Request $request) {
+
+    $request->validate([
+        'kart_numarasi' => 'required|credit_card',
+        'ay' => 'required|numeric|between:1,12',
+        'yıl' => 'required|numeric|between:2023,2053',
+        'cvv' => 'required|digits:3',
     ]);
 
     $order = new Order();

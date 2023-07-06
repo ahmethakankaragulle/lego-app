@@ -432,7 +432,7 @@
                     @endif
                     <div class="row">
                         <div class="col-xs-12">
-                            <form class="form-horizontal" role="form" method="post" action="{{ route('sepet.onay') }}">
+                            <form class="form-horizontal" role="form" method="post" action="{{ route('ödeme') }}">
                                 @csrf
                                 <div class="form-group">
                                     <div class="col-sm-10">
