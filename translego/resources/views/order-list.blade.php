@@ -465,11 +465,22 @@
                 <tbody>
                     @foreach($orders as $order)
                     @foreach($order->orderItems as $orderItem)
+                    @if($orderItem->item_type == 1)
+                    <?php $art = \App\Models\UserArt::find($orderItem->item_id);  ?>
                     <tr>
                         <td class="text-primary font-weight-bold">#123456{{$order->id}}</td>
                         <td>{{$order->user->name}}</td>
-                        <td class="text-success font-weight-bold">{{$order->status}}</td>
-                        <td>{{ $orderItem->product->price }} TL</td>
+                        <td class="font-weight-bold">
+                            @if($order->status == 0)
+                            <p class="text-primary">Hazırlanıyor</p>
+                            @elseif($order->status == 1)
+                            <p class="text-success">Teslim Edildi</p>
+                            @else
+                            <p class="text-danger">İptal Edildi</p>
+                            @endif
+
+                        </td>
+                        <td>{{ $art->price }} TL</td>
                         <td>{{$order->created_at}}</td>
                         <td>{{$order->updated_at}}</td>
                         <td>
@@ -477,6 +488,9 @@
                             <button type="button" class="btn btn-danger btn-sm"> <img src="/storage/icons/garbage-trash-svgrepo-com.svg" height="20px" alt="Sil"></button>
                         </td>
                     </tr>
+                    @else
+
+                    @endif
 
                     @endforeach
                     @endforeach

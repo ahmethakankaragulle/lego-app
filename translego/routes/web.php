@@ -36,25 +36,25 @@ Route::get('/editor', function () {
     return view('image-editor');
 })->middleware('auth');
 
-Route::get('/product', function () {
+Route::get('/ürün', function () {
     return view('product-detail');
 });
 
-Route::get('/products', [ProductController::class, 'listActiveProducts']);
+Route::get('/ürünler', [ProductController::class, 'listActiveProducts']);
 
-Route::get('/product/{id}', [ProductController::class, 'productDetail'])->name('product-detail');
+Route::get('/ürünler/{id}', [ProductController::class, 'productDetail'])->name('product-detail');
 
-Route::get('/orders', function () {
+Route::get('/siparişlerim', function () {
     return view('my-orders')->with([
         'orders' => auth()->user()->orders()->whereStatus(0)->get()
     ]);
 })->middleware('auth');
 
-Route::get('/order-list', [OrderController::class, 'listAllOrders']);
+Route::get('/sipariş-listesi', [OrderController::class, 'listAllOrders']);
 
-Route::get('/product-list', [ProductController::class, 'listAllProducts']);
+Route::get('/ürün-listesi', [ProductController::class, 'listAllProducts']);
 
-Route::get('/messages', [MessageController::class, 'listAllMessage']);
+Route::get('/mesajlar', [MessageController::class, 'listAllMessage']);
 
 Route::post('/art/push', function (\Illuminate\Http\Request $request) {
 
@@ -127,7 +127,7 @@ Route::post('/kart-bilgileri', function (\Illuminate\Http\Request $request) {
 })->name('kart.bilgileri');
 
 
-Route::post('/sepet/onayla', function (\Illuminate\Http\Request $request) {
+Route::post('/sepet-onay', function (\Illuminate\Http\Request $request) {
 
     $request->validate([
         'name' => 'required|string|max:130|min:6',
@@ -165,6 +165,9 @@ Route::post('/sepet/onayla', function (\Illuminate\Http\Request $request) {
             $order_item->price = $product->price;
             $order_item->save();
         }
+
+        $basket->status = 1;
+        $basket->save();
     }
 
     return view('orderscomplete');

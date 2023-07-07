@@ -574,7 +574,7 @@
                     </div>
                 </div>
 
-                < class="panel d-flex flex-row justify-content-start">
+                <div class="panel d-flex flex-row justify-content-start">
 
                     <div class="d-flex flex-row flex-wrap p-4 w-50" style="border-right: 1px solid #a1a1a1">
                         <div class="p-1">
@@ -587,37 +587,37 @@
                         </div>
                     </div>
 
-            </div>
-            @endif
-
-
-            @endforeach
-
-            @if(empty($basket))
-            <div style="color:#000; font-size:30px;">
-                Sepetinizde ürün yok !
-            </div>
-            <div style="position: absolute; right:38%; bottom:5%;">
-                <img src="/storage/images/empty-cart.png" alt="">
-            </div>
-            @else
-            <div style="width:60%; text-align:right; margin-top:2rem; margin-bottom:10rem;">
-
-                <div style="color:black; text-align:right; margin-bottom:4rem; font-size:20px; ">
-                    Toplam tutar: <strong>{{$a}}₺</strong>
-                </div>
-                <a href="/adres-bilgileri" class="btn btn-lg btn-primary"> <span>DEVAM</span> </a>
-
-                <div style="z-index:-1; position:absolute; top:25%; right:5%;">
-                    <img src="/storage/images/full-cart.png" alt="" width="200px">
                 </div>
                 @endif
+
+
+                @endforeach
+
+                @if(empty($basket))
+                <div style="color:#000; font-size:30px;">
+                    Sepetinizde ürün yok !
+                </div>
+                <div style="position: absolute; right:38%; bottom:5%;">
+                    <img src="/storage/images/empty-cart.png" alt="">
+                </div>
+                @else
+                <div style="width:60%; text-align:right; margin-top:2rem; margin-bottom:10rem;">
+
+                    <div style="color:black; text-align:right; margin-bottom:4rem; font-size:20px; ">
+                        Toplam tutar: <strong>{{$a}}₺</strong>
+                    </div>
+                    <a href="/adres-bilgileri" class="btn btn-lg btn-primary"> <span>DEVAM</span> </a>
+
+                    <div style="z-index:-1; position:absolute; top:25%; right:5%;">
+                        <img src="/storage/images/full-cart.png" alt="" width="200px">
+                    </div>
+                    @endif
+                </div>
             </div>
+
+
+
         </div>
-
-
-
-    </div>
     </div>
 
     <script>

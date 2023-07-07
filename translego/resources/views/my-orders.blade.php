@@ -422,16 +422,17 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.2s ease-out;
+            box-shadow: 0px 0px 10px lightgray inset;
         }
 
         svg:hover {
             fill: white;
             cursor: pointer;
         }
-        p{
+
+        p {
             margin-bottom: 0 !important;
         }
-
     </style>
 
     @vite(['resources/js/app.js'])
@@ -443,7 +444,7 @@
     @include('layouts.header')
     <div class="container px-5 py-5">
 
-        <div class="header pb-5 pt-2">
+        <div class="header pb-3 pt-2">
             <h1>Siparişlerim</h1>
         </div>
 
@@ -459,84 +460,206 @@
         </div>
 
         <div class="orders py-3">
-            
+
             @foreach($orders as $order)
-                @foreach($order->orderItems as $orderItem)
+            @foreach($order->orderItems as $orderItem)
 
-                <div class="order">
-                    <div class="accordion">
-                        <div class="d-flex flex-row">
+            <div class="order mb-5">
+
+                @if($orderItem->item_type == 1)
+                <?php $art = \App\Models\UserArt::find($orderItem->item_id);  ?>
+
+                <div class="accordion">
+                    <div class="d-flex flex-row">
+                        <div>
+                            <img class="accbutton" src="{{$art->image}}" alt="Ürün Görseli" width="80px" height="80px" style="border:solid black 0.2px; border-radius:50%;">
+                        </div>
+                        <div class="mx-5">
                             <div>
-                                <img class="accbutton" src="{{$orderItem->product->image_path}}" alt="Ürün Görseli" width="80px" height="80px" style="border:solid black 0.2px; border-radius:50%;">
+                                <p>Sipariş No <strong>123456{{$order->id}}</strong></p>
                             </div>
-                            <div class="mx-5">
-                                <div>
-                                    <p>Sipariş No <strong>123456{{$order->id}}</strong></p>
-                                </div>
-                                <div>
-                                    <p>{{$order->created_at}}</p>
-                                </div>
+                            <div>
+                                <p>{{$order->created_at}}</p>
                             </div>
-                        </div>
-                        
-
-                        <div class="w-15 d-flex flex-row align-middle">
-                            <img src="/storage/icons/ok-circle-filled-svgrepo-com.svg" alt="" width="30">
-                            <p style="margin-left:10px;">Sipariş Tamamlandı</p>
-                        </div>
-
-                        <div>
-                            <p class="text-success">{{ $orderItem->product->price }} TL</p>
-                        </div>
-
-                        <div>
-                            <button class="accbutton" style="position: absolute; right:10px; bottom:40%; padding:0;">
-                                <svg width="20px" height="20px" viewBox="-102.4 -102.4 1228.80 1228.80" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#185ADB" stroke="#185ADB" stroke-width="47.104">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="8.192"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <path d="M903.232 256l56.768 50.432L512 768 64 306.432 120.768 256 512 659.072z" fill="#185ADB"></path>
-                                    </g>
-                                </svg>
-                            </button>
                         </div>
                     </div>
 
-                    <div class="panel d-flex flex-row justify-content-start">
 
-                        <div class="d-flex flex-row flex-wrap p-4 w-50" style="border-right: 1px solid #a1a1a1">
-                            <div class="p-1">
-                                <img src="{{$orderItem->product->image_path}}" alt="Ürün görseli" style="border:solid black 0.2px; width:200px; height:200px;">
-                            </div>
-                            <div class="p-2">
-                                <h4>{{$orderItem->product->name}} </h4>
-                                <h5>Paket İçeriği:</h5>
-                                <p>{{$orderItem->product->name}} </p>
-                            </div>
-                        </div>
+                    <div class="w-15 d-flex flex-row align-middle">
+                        @if($order->status == 0)
+                        <img src="/storage/icons/ok-circle-filled-svgrepo-com.svg" alt="" width="30">
+                        <p style="margin-left:10px;">Siparişiniz Hazırlanıyor</p>
+                        @elseif($order->status == 1)
+                        <img src="/storage/icons/ok-circle-filled-svgrepo-com.svg" alt="" width="30">
+                        <p style="margin-left:10px;">Siparişiniz Tamamlandı</p>
+                        @else
+                        <img src="/storage/icons/ok-circle-filled-svgrepo-com.svg" alt="" width="30">
+                        <p style="margin-left:10px;">Siparişinizin İptal Edildi</p>
+                        @endif
+                    </div>
 
-                        <div class="d-flex flex-column p-4 w-50 justify-content-between">
-                            <div class="d-flex flex-row flex-wrap">
-                                <img src="/storage/icons/package-packing-svgrepo-com.svg" width="70px" alt="" >
-                                <div style="margin-left:30px;">
-                                    <p>{{$order->status}}</p>
-                                    <p>{{$order->updated_at}}</p>
-                                </div>
-                            </div>
+                    <div>
+                        <p class="text-success">{{ $art->price }} TL</p>
+                    </div>
 
-                            <div>
-                                <a style="text-decoration: none; color:#444;" href=""> <img src="/storage/icons/cargo-truck-svgrepo-com.svg" width="60px" alt=""> <span style="margin-left:30px; font-weight:600;" >Kargo Takibi</span></a>
-                            </div>
-                        </div>
-
+                    <div>
+                        <button class="accbutton" style="position: absolute; right:10px; bottom:40%; padding:0;">
+                            <svg width="20px" height="20px" viewBox="-102.4 -102.4 1228.80 1228.80" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#185ADB" stroke="#185ADB" stroke-width="47.104">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="image_path" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="8.192"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M903.232 256l56.768 50.432L512 768 64 306.432 120.768 256 512 659.072z" fill="#185ADB"></path>
+                                </g>
+                            </svg>
+                        </button>
                     </div>
                 </div>
-                @endforeach
+
+                <div class="panel d-flex flex-row justify-content-start">
+
+                    <div class="d-flex flex-row flex-wrap p-4 w-75" style="border-right: 1px solid #a1a1a1">
+                        <div class="p-1">
+                            <img src="{{$art->image}}" alt="Ürün görseli" style="border:solid black 0.2px; width:200px; height:200px;">
+                        </div>
+                        <div class="p-2">
+                            <h4>{{$art->name}} </h4>
+                            <h5>Paket İçeriği:</h5>
+                            @foreach($art->data as $d)
+                            <div style="padding: 4px;">
+                                <?php echo '<div style="background-color:#', ($d[2]), ';color:#', ($d[2]), '; width:20px;display:inline-block;padding:0px 5p;">O</div>' ?>
+                                {{($d[3])}} Adet #{{($d[2])}} Renk kodlu 1x1 Lego parçası
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column p-4 w-50 justify-content-between">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div style="margin-left:30px;">
+                                @if($order->status == 0)
+                                <div class="d-flex flex-row justify-center">
+                                    <div>
+                                        <img src="/storage/icons/delivery-sales-discount-svgrepo-com.svg" alt="" width="90">
+                                    </div>
+
+                                    <div>
+                                        <h3 style="margin-left:10px;">Hazırlanıyor </h3>
+                                        <p>Sipariş Tarihi: {{$order->created_at}}</p>
+                                    </div>
+                                </div>
+
+
+                                @elseif($order->status == 1)
+                                <div>
+                                    <div>
+                                        <img src="/storage/icons/delivery-sales-discount-svgrepo-com.svg" alt="" width="30">
+                                    </div>
+
+                                    <div>
+                                        <h3 style="margin-left:10px;">Teslim Edildi</h3>
+                                        <p>Teslim Tarihi: {{$order->updated_at}}</p>
+                                    </div>
+                                </div>
+                                @else
+                                <div>
+                                    <div>
+                                        <img src="/storage/icons/delivery-sales-discount-svgrepo-com.svg" alt="" width="30">
+                                    </div>
+
+                                    <div>
+                                        <h3 style="margin-left:10px;">İptal Edildi</h3>
+                                        <p>İptal Tarihi: {{$order->updated_at}}</p>
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-end">
+                            <a style="text-decoration: none; color:#444;" href="{{$order->cargo_tracking}}"> <img src="/storage/icons/delivery-truck-truck-svgrepo-com.svg" width="60px" alt=""> <span style="margin-left:30px; font-weight:600;">Kargo Takibi</span></a>
+                        </div>
+                    </div>
+
+                </div>
+
+                @else
+
+                <div class="accordion">
+                    <div class="d-flex flex-row">
+                        <div>
+                            <img class="accbutton" src="{{$orderItem->art->image}}" alt="Ürün Görseli" width="80px" height="80px" style="border:solid black 0.2px; border-radius:50%;">
+                        </div>
+                        <div class="mx-5">
+                            <div>
+                                <p>Sipariş No <strong>123456{{$order->id}}</strong></p>
+                            </div>
+                            <div>
+                                <p>{{$order->created_at}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="w-15 d-flex flex-row align-middle">
+                        <img src="/storage/icons/ok-circle-filled-svgrepo-com.svg" alt="" width="30">
+                        <p style="margin-left:10px;">Sipariş Tamamlandı</p>
+                    </div>
+
+                    <div>
+                        <p class="text-success">{{ $orderItem->product->price }} TL</p>
+                    </div>
+
+                    <div>
+                        <button class="accbutton" style="position: absolute; right:10px; bottom:40%; padding:0;">
+                            <svg width="20px" height="20px" viewBox="-102.4 -102.4 1228.80 1228.80" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#185ADB" stroke="#185ADB" stroke-width="47.104">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="8.192"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M903.232 256l56.768 50.432L512 768 64 306.432 120.768 256 512 659.072z" fill="#185ADB"></path>
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel d-flex flex-row justify-content-start">
+
+                    <div class="d-flex flex-row flex-wrap p-4 w-50" style="border-right: 1px solid #a1a1a1">
+                        <div class="p-1">
+                            <img src="{{$orderItem->art->image}}" alt="Ürün görseli" style="border:solid black 0.2px; width:200px; height:200px;">
+                        </div>
+                        <div class="p-2">
+                            <h4>{{$orderItem->product->name}} </h4>
+                            <h5>Paket İçeriği:</h5>
+                            <p>{{$orderItem->product->name}} </p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column p-4 w-50 justify-content-between">
+                        <div class="d-flex flex-row flex-wrap">
+                            <img src="/storage/icons/package-packing-svgrepo-com.svg" width="70px" alt="">
+                            <div style="margin-left:30px;">
+                                <p>{{$order->status}}</p>
+                                <p>{{$order->updated_at}}</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <a style="text-decoration: none; color:#444;" href=""> <img src="/storage/icons/cargo-truck-svgrepo-com.svg" width="60px" alt=""> <span style="margin-left:30px; font-weight:600;">Kargo Takibi</span></a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                @endif
+            </div>
+            @endforeach
             @endforeach
 
 
-            
-            
+
+
 
         </div>
     </div>

@@ -98,7 +98,7 @@
                 <a href="{{ url('/dashboard') }}">Dashboard</a>
                 <a href="{{ url('/user/profile') }}">Hesabım</a>
                 @else
-                <a href="{{ url('/user/orders') }}">Siparişlerim</a>
+                <a href="{{ url('/siparişlerim') }}">Siparişlerim</a>
                 <a href="{{ url('/user/profile') }}">Hesabım</a>
                 @endif
                 @else
