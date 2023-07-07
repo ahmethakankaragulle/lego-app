@@ -464,7 +464,7 @@
                         @endif
                     </div>
                     <div class="d-flex">
-                        <a class="btn btn-primary btn-sm"><img src="storage/icons/mail-right-arrow-svgrepo-com.svg" height="20px" alt="Mesaj Gönder"></a>
+                        <a class="btn btn-primary btn-sm" href="https://mail.google.com/mail/?view=cm&fs=1&to={{ $message->email }}&su=Cevap: {{ $message->message }}"><img src="storage/icons/mail-right-arrow-svgrepo-com.svg" height="20px" alt="Mesaj Gönder"></a>
                         <a class="btn btn-danger btn-sm ml-2" href="{{ route('delete-message', ['id' => $message->id]) }}"> <img src="/storage/icons/garbage-trash-svgrepo-com.svg" height="20px" alt="Sil"></a>
                     </div>
                 </div>
