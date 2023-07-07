@@ -20,7 +20,7 @@ use Intervention\Image\Facades\Image as Image;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('anasayfa');
 
 Route::middleware([
     'auth:sanctum',
@@ -43,6 +43,8 @@ Route::get('/ürün', function () {
 Route::get('/ürünler', [ProductController::class, 'listActiveProducts']);
 
 Route::get('/ürünler/{id}', [ProductController::class, 'productDetail'])->name('product-detail');
+
+Route::get('/message/{id}', [MessageController::class, 'deleteMessage'])->name('delete-message');
 
 Route::get('/siparişlerim', function () {
     return view('my-orders')->with([

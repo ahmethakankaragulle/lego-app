@@ -97,9 +97,23 @@
                 @if (Auth::user()->type() == 'admin')
                 <a href="{{ url('/dashboard') }}">Dashboard</a>
                 <a href="{{ url('/user/profile') }}">Hesabım</a>
+                <form method="POST" action="{{ route('logout') }}" x-data>
+                    @csrf
+
+                    <a href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                        {{ __('Çıkış Yap') }}
+                    </a>
+                </form>
                 @else
                 <a href="{{ url('/siparişlerim') }}">Siparişlerim</a>
                 <a href="{{ url('/user/profile') }}">Hesabım</a>
+                <form method="POST" action="{{ route('logout') }}" x-data>
+                    @csrf
+
+                    <a href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                        {{ __('Çıkış Yap') }}
+                    </a>
+                </form>
                 @endif
                 @else
                 <a href="{{ route('login') }}">Giriş Yap</a>
