@@ -527,7 +527,7 @@
                     </div>
                     <div style="width:15%">
                         {{ $product->price }}₺
-                        <?php $a += $art->price ?>
+                        <?php $a += $product->price ?>
                     </div>
                     <div>
                         <a href="{{ route('sepet.sil' , [$basket->id]) }}">
@@ -576,14 +576,14 @@
 
                 <div class="panel d-flex flex-row justify-content-start">
 
-                    <div class="d-flex flex-row flex-wrap p-4 w-50" style="border-right: 1px solid #a1a1a1">
+                    <div class="d-flex flex-row flex-wrap p-4 w-100">
                         <div class="p-1">
-                            <img src="{{$orderItem->product->image_path}}" alt="Ürün görseli" style="border:solid black 0.2px; width:200px; height:200px;">
+                            <img src="{{$product->image_path}}" alt="Ürün görseli" style="border:solid black 0.2px; width:200px; height:200px;">
                         </div>
                         <div class="p-2">
-                            <h4>{{product->name}} </h4>
+                            <h4>{{$product->name}} </h4>
                             <h5>Paket İçeriği:</h5>
-                            <p>{{product->name}} </p>
+                            <p>{{$product->name}} </p>
                         </div>
                     </div>
 

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title name="header">Sepet</title>
+    <title name="header">Ürünler</title>
 
     <!-- Fonts -->
 
@@ -391,63 +391,70 @@
             padding-top: 4.5rem;
 
         }
-        .filter-bar{
-            display:flex; 
+
+        .filter-bar {
+            display: flex;
             justify-content: flex-end;
             position: fixed;
             padding: 10px;
             margin-top: 2px;
             padding-right: 5%;
             padding-left: 5%;
-            width:100%; 
-            height:7%;
+            width: 100%;
+            height: 7%;
         }
-        .product-list{
-            display:flex; 
+
+        .product-list {
+            display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            width:100%; 
-            height:100%; 
-            padding:5%
+            width: 100%;
+            height: 100%;
+            padding: 5%
         }
-        .product-card{
+
+        .product-card {
             width: 250px;
             height: 350px;
-            display:flex; 
-            flex-direction:column; 
+            display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            background-color:white; 
+            background-color: white;
             border: 1px solid #ADADAD;
             border-radius: 5px;
             margin-bottom: 50px;
-            margin-right:40px;
+            margin-right: 40px;
         }
-        .product-card a{
-            padding:8px;
+
+        .product-card a {
+            padding: 8px;
             height: 100%;
             width: 100%;
-            display:flex; 
-            flex-direction:column; 
+            display: flex;
+            flex-direction: column;
             justify-content: space-between;
             text-decoration: none;
             color: black;
             transition: 0.3s;
         }
-        .product-card a:hover{
+
+        .product-card a:hover {
             text-decoration: none;
             color: black;
             box-shadow: 0px 0px 20px -8px gray;
             transition: 0.3s;
 
         }
-        .product-image img{
+
+        .product-image img {
             width: 100%;
             height: 210px;
             object-fit: cover;
             border: 1px solid #ADADAD;
             border-radius: 5px;
         }
-        .product-name{
+
+        .product-name {
             font-size: 1.5em;
             font-weight: bold;
             line-height: 1.2;
@@ -457,13 +464,12 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .product-price{
+
+        .product-price {
             text-align: right;
             font-size: 1.5em;
             font-weight: bold;
         }
-
-
     </style>
 
     @vite(['resources/js/app.js'])
@@ -477,9 +483,9 @@
         <div class="filter-bar">
 
             <div class="input-group w-100" style="align-items:center; justify-content:end;">
-                
+
                 <input type="text" class="form-control" placeholder="Ürün ara" aria-label="Ürün ara" aria-describedby="basic-addon2" style="max-width:250px; max-height:50px; border-radius:18px;">
-                
+
                 <div class="input-group-append" style="margin-left:15px;margin-right:50px;">
                     <button class="btn btn-outline-secondary" type="button" style="background-color:#f8fafc;">Ara</button>
                 </div>
@@ -491,7 +497,7 @@
                     <option>Çerçeveler</option>
                 </select>
             </div>
-            
+
         </div>
 
         <div class="product-list">
@@ -505,14 +511,14 @@
                         {{ $product->name }}
                     </div>
                     <div class="product-price">
-                        {{ $product->price }}
+                        {{ $product->price }} TL
                     </div>
                 </a>
             </div>
             @endforeach
 
         </div>
-        
+
     </div>
 </body>
 

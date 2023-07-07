@@ -191,3 +191,19 @@ Route::get('/sepet-durum/{order}/{status}', function (Order $order, int $status)
 
     return back();
 })->name('siparis.durum');
+
+
+Route::post('/product/push', function (\Illuminate\Http\Request $request) {
+
+    $count = 1;
+    if ($request->count != null) {
+        $count = $request->count;
+    }
+    auth()->user()->baskets()->create([
+        'user_id' => auth()->user()->id,
+        'item_id' => $request->product_id,
+        'item_type' => 2,
+        'count' => $count,
+    ]);
+    return back()->with('success', 'Ürün Sepete Başarıyla Eklendi.');
+})->middleware('auth')->name('push-basket');

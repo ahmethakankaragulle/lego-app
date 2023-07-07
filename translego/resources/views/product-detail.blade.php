@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title name="header">Sepet</title>
+    <title name="header">{{$product->name}}</title>
 
     <!-- Fonts -->
 
@@ -392,31 +392,34 @@
 
         }
 
-        .containers{
+        .containers {
             display: flex;
             flex-direction: row;
             justify-content: center;
             flex-wrap: wrap;
             padding-top: 4%;
         }
-        .img-section{
+
+        .img-section {
             width: 30%;
             align-items: center;
             display: flex;
             justify-content: center
         }
-        .img-section img{
+
+        .img-section img {
             width: 400px;
             max-height: 400px;
+            border-radius: 15%;
             height: auto;
             object-fit: cover;
         }
 
-        .add-section{
+        .add-section {
             width: 30%;
         }
 
-        .options-price{
+        .options-price {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -425,7 +428,7 @@
         .price {
             display: inline-block;
             width: 80px;
-            height: 38px;      
+            height: 38px;
             background-color: #6ab070;
             -webkit-border-radius: 3px 4px 4px 3px;
             -moz-border-radius: 3px 4px 4px 3px;
@@ -439,6 +442,7 @@
             line-height: 38px;
             padding: 0 10px 0 10px;
         }
+
         .price:before {
             content: "";
             position: absolute;
@@ -450,6 +454,7 @@
             border-bottom: 19px solid transparent;
             border-right: 19px solid #6ab070;
         }
+
         .price:after {
             content: "";
             background-color: white;
@@ -462,14 +467,19 @@
             top: 17px;
         }
 
-        .detail-section{
+        .detail-section {
             width: 20%;
         }
-        .detail{
+
+        .detail {
             font-size: 16px;
-            text-align:justify;
+            text-align: justify;
         }
 
+        .successAlert {
+            position: absolute;
+            bottom: 0;
+        }
     </style>
 
     @vite(['resources/js/app.js'])
@@ -489,26 +499,36 @@
                 <h2 class="font-weight-bold">{{$product->name}}</h2>
             </div>
             <div class="options-price">
-                
                 <div class="input-group w-50" style="align-items:center; justify-content:space-around;">
-    
-                    <select class="form-select" style="max-width:100px;">
-                        <option selected disabled>Boyut</option>
-                        <option value="1">10*10</option>
-                        <option value="2">15*15</option>
-                        <option value="3">20*20</option>
-                    </select>
 
-                    <select class="form-select" style="max-width:80px;">
-                        <option selected disabled>Adet</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">4</option>
-                        <option value="4">6</option>
-                        <option value="5">8</option>
-                        <option value="6">9</option>
-                        <option value="7">12</option>
-                    </select>
+                    <form class="form-horizontal" role="form" method="post" action="{{ route('push-basket')}}">
+                        @csrf
+                        <div class="form-group">
+                            <select class="form-select" style="max-width:100px;" name="size">
+                                <option selected disabled>Boyut</option>
+                                <option value="1" default>10*10</option>
+                                <option value="2">15*15</option>
+                                <option value="3">20*20</option>
+                            </select>
+
+                            <select class="form-select" style="max-width:80px;" name="count">
+                                <option selected disabled>Adet</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">4</option>
+                                <option value="4">6</option>
+                                <option value="5">8</option>
+                                <option value="6">9</option>
+                                <option value="7">12</option>
+                            </select>
+
+                            <input type="hidden" name="product_id" value="{{$product->id}}" />
+                        </div>
+                        <div class="add-cart d-flex justify-content-end mt-5">
+                            <button class="btn btn-primary btn-lg">Sepete Ekle</button>
+                        </div>
+                    </form>
+
 
                 </div>
 
@@ -517,9 +537,7 @@
                 </div>
             </div>
 
-            <div class="add-cart d-flex justify-content-end mt-5">
-                <button type="button" class="btn btn-primary btn-lg">Sepete Ekle</button>
-            </div>
+
         </div>
 
         <div class="detail-section border bg-white text-dark p-4 mx-5">
@@ -540,8 +558,23 @@
             </div>
             @endif
         </div>
-        
+
+        @if(Session::has('success'))
+        <div id="successAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ Session::get('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
     </div>
 </body>
+
+<script>
+    setTimeout(function() {
+        var successAlert = document.getElementById('successAlert');
+        if (successAlert) {
+            successAlert.remove();
+        }
+    }, 3000);
+</script>
 
 </html>
