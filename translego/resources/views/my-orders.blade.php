@@ -583,11 +583,11 @@
                 </div>
 
                 @else
-
+                <?php $product = \App\Models\Product::find($orderItem->item_id);  ?>
                 <div class="accordion">
                     <div class="d-flex flex-row">
                         <div>
-                            <img class="accbutton" src="{{$orderItem->art->image}}" alt="Ürün Görseli" width="80px" height="80px" style="border:solid black 0.2px; border-radius:50%;">
+                            <img class="accbutton" src="{{$product->image_path}}" alt="Ürün Görseli" width="80px" height="80px" style="border:solid black 0.2px; border-radius:50%;">
                         </div>
                         <div class="mx-5">
                             <div>
@@ -606,7 +606,7 @@
                     </div>
 
                     <div>
-                        <p class="text-success">{{ $orderItem->product->price }} TL</p>
+                        <p class="text-success">{{ $product->price }} TL</p>
                     </div>
 
                     <div>
@@ -626,21 +626,54 @@
 
                     <div class="d-flex flex-row flex-wrap p-4 w-50" style="border-right: 1px solid #a1a1a1">
                         <div class="p-1">
-                            <img src="{{$orderItem->art->image}}" alt="Ürün görseli" style="border:solid black 0.2px; width:200px; height:200px;">
+                            <img src="{{$product->image_path}}" alt="Ürün görseli" style="border:solid black 0.2px; width:200px; height:200px;">
                         </div>
                         <div class="p-2">
-                            <h4>{{$orderItem->product->name}} </h4>
+                            <h4>{{$product->name}} </h4>
                             <h5>Paket İçeriği:</h5>
-                            <p>{{$orderItem->product->name}} </p>
+                            <p>{{$product->name}} </p>
                         </div>
                     </div>
 
                     <div class="d-flex flex-column p-4 w-50 justify-content-between">
                         <div class="d-flex flex-row flex-wrap">
-                            <img src="/storage/icons/package-packing-svgrepo-com.svg" width="70px" alt="">
                             <div style="margin-left:30px;">
-                                <p>{{$order->status}}</p>
-                                <p>{{$order->updated_at}}</p>
+                                @if($order->status == 0)
+                                <div class="d-flex flex-row justify-center">
+                                    <div>
+                                        <img src="/storage/icons/delivery-sales-discount-svgrepo-com.svg" alt="" width="90">
+                                    </div>
+
+                                    <div>
+                                        <h3 style="margin-left:10px;">Hazırlanıyor </h3>
+                                        <p>Sipariş Tarihi: {{$order->created_at}}</p>
+                                    </div>
+                                </div>
+
+
+                                @elseif($order->status == 1)
+                                <div>
+                                    <div>
+                                        <img src="/storage/icons/delivery-sales-discount-svgrepo-com.svg" alt="" width="30">
+                                    </div>
+
+                                    <div>
+                                        <h3 style="margin-left:10px;">Teslim Edildi</h3>
+                                        <p>Teslim Tarihi: {{$order->updated_at}}</p>
+                                    </div>
+                                </div>
+                                @else
+                                <div>
+                                    <div>
+                                        <img src="/storage/icons/delivery-sales-discount-svgrepo-com.svg" alt="" width="30">
+                                    </div>
+
+                                    <div>
+                                        <h3 style="margin-left:10px;">İptal Edildi</h3>
+                                        <p>İptal Tarihi: {{$order->updated_at}}</p>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                         </div>
 
