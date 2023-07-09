@@ -501,7 +501,7 @@
                                       <span class="input-group-text">Ürün Fotoğrafı :</span>
                                     </div>
                                     <div class="custom-file mx-2">
-                                      <input type="file" class="custom-file-input" id="inputGroupFile01">
+                                      <input type="file" class="custom-file-input" id="productImage" name="product-image">
                                     </div>
                                   </div>
                                 <div class="input-group mb-3">
@@ -526,7 +526,10 @@
                                     <div class="input-group-prepend">
                                       <span class="input-group-text" id="basic-addon3">Ürün Durumu : </span>
                                     </div>
-                                    <input type="number" class="form-control"  name="product-active" id="productActive">
+                                    <select class="form-select" style="width:190px;" name="product-active" id="productActive">
+                                        <option value="1">Aktif</option>
+                                        <option value="0">Pasif</option>
+                                    </select>
                                 </div>
                                 
                                 <div class="input-group mb-3">
@@ -643,11 +646,17 @@
                         <td>{{$product->name}}</td>
                         <td>{{$product->count}}</td>
                         <td>{{ $product->price }} TL</td>
-                        <td class="text-success font-weight-bold">{{$product->is_active}}</td>
+                        <td class="text-success font-weight-bold">
+                            @if($product->is_active == 1)
+                                <span class="text-succes">Aktif</span>
+                            @else
+                                <span class="text-secondary">Pasif</span>
+                            @endif
+                        </td>
                         <td>{{$product->category->name}}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-sm edit-button" data-product-id="{{ $product->id }}"><img src="storage/icons/pencil-ui-svgrepo-com.svg" height="20px" alt="Güncelle"></button>
-                            <button type="button" class="btn btn-danger btn-sm"> <img src="/storage/icons/garbage-trash-svgrepo-com.svg" height="20px" alt="Sil"></button>
+                            <a class="btn btn-danger btn-sm" href="{{ route('product.delete', [$product->id]) }}"> <img src="/storage/icons/garbage-trash-svgrepo-com.svg" height="20px" alt="Sil"></a>
                         </td>
                     </tr>
                 @endforeach

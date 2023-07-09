@@ -259,8 +259,28 @@ Route::post('/product-update', function (\Illuminate\Http\Request $request) {
 Route::post('/product-create', function (\Illuminate\Http\Request $request) {
    
     $product = new \App\Models\Product();
+    $product->category_id = $request->input('product-category');
+    $product->name = $request->input('product-name');
+    $product->is_active = $request->input('product-active');
+    $product->count = $request->input('product-count');
+    $product->price = $request->input('product-price');
+
 
     
-    return redirect()->back()->with('success', 'Başarıyla Güncellendi.');
+
+
+    $product->image_path = "/storage/images/33.png";
+    $product->save();
+
+
+    
+    return redirect()->back()->with('success', 'Ürün Başarıyla Eklendi.');
 
 })->name('product.create');
+
+Route::get('/product/{id}/delete', function ($id) {
+    \App\Models\Product::find($id)->delete();
+    
+    return redirect()->back()->with('success', 'Ürün Başarıyla Silindi.');
+
+})->name('product.delete');
