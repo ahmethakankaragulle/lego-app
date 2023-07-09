@@ -264,16 +264,8 @@ Route::post('/product-create', function (\Illuminate\Http\Request $request) {
     $product->is_active = $request->input('product-active');
     $product->count = $request->input('product-count');
     $product->price = $request->input('product-price');
-
-
-    
-
-
     $product->image_path = "/storage/images/33.png";
     $product->save();
-
-
-    
     return redirect()->back()->with('success', 'Ürün Başarıyla Eklendi.');
 
 })->name('product.create');
@@ -284,3 +276,15 @@ Route::get('/product/{id}/delete', function ($id) {
     return redirect()->back()->with('success', 'Ürün Başarıyla Silindi.');
 
 })->name('product.delete');
+
+Route::post('/message-send', function (\Illuminate\Http\Request $request) {
+    
+    $message = new \App\Models\Message();
+    $message->name = $request->input('message-name');
+    $message->email = $request->input('message-mail');
+    $message->message = $request->input('message-text');
+    $message->status = 0;
+    $message->save();
+    return redirect()->back()->with('success', 'Mesaj Başarıyla Gönderildi.');
+
+})->name('message.send');

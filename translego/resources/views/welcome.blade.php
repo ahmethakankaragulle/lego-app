@@ -678,7 +678,44 @@
             <img src="/storage/images/legos1.png" style="position:absolute; width:250px; right:5%;">
             <h1 class="title" style="margin-bottom:30px;">Bizimle İletişime Geç</h1>
 
+        <div class="d-flex flex-row w-100">
+            <div class="w-50">
+                @if($errors->any())
+                    <div class="row">
+                        <div class="col">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                <li>
+                                    {{ $error }}
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    @endif
 
+                <form class="form-horizontal" role="form" method="post" action="{{ route('message.send') }}">
+                    @csrf
+                    <div class="form-group">
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="message-name" id="messageName" placeholder="Adınız">
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="email" class="form-control" name="message-mail" id="messageMail" placeholder="E-mail Adresiniz">
+                            </div>
+                            <div class="input-group mb-3">
+                                <textarea class="form-control" name="message-text" id="messageText" rows="3" placeholder="Mesajınız"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 100%; text-align:right; margin-top:4rem;">
+                        <button class="btn btn-lg btn-primary"> <span>Gönder</span> </button>
+                    </div>
+                </form>
+            </div>
+
+            <div>
             <div class="col-sm-6" style="padding-left:100px; padding-top:30px; width:50%">
                 <div class="smicon">
                     <div class="smiconback" style="background-color:#2b4375;">
@@ -699,6 +736,11 @@
                     <span class="smname" style="color:#9c1b20;">TransLego</span>
                 </div>
             </div>
+    </div>
+</div>
+            
+
+            
         </div>
     </div>
     <script>
