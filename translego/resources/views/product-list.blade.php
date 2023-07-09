@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title name="header">Sepet</title>
+    <title name="header">Ürünler</title>
 
     <!-- Fonts -->
 
@@ -411,13 +411,185 @@
 
     <div class="container px-5 py-5">
 
+        <!-- Edit Product Modal -->
+        <div class="modal fade" id="productUpdateModal" tabindex="-1" role="dialog" aria-labelledby="productUpdateModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productUpdateModalLabel">Ürün Bilgilerini Düzenle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" method="post" action="{{ route('product.update') }}">
+                        @csrf
+                        <div class="form-group">
+                            <div class="col">
+                                <input type="hidden" name="product-id" id="productId">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">Ürün Fotoğrafı :</span>
+                                    </div>
+                                    <div class="custom-file mx-2">
+                                      <input type="file" class="custom-file-input" id="inputGroupFile01">
+                                    </div>
+                                  </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="basic-addon3">Ürün Adı : </span>
+                                    </div>
+                                    <input type="text" class="form-control" name="product-name" id="productName" placeholder=" Ürün Adı">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="basic-addon3">Ürün Fiyatı : </span>
+                                    </div>
+                                    <input type="number" class="form-control" name="product-price" id="productPrice">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="basic-addon3">Ürün Adedi : </span>
+                                    </div>
+                                    <input type="number" class="form-control"  name="product-count" id="productCount">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="basic-addon3">Ürün Durumu : </span>
+                                    </div>
+                                    <input type="number" class="form-control"  name="product-active" id="productActive">
+                                </div>
+                                
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon3">Kategori : </span>
+                                    </div>
+                                    <select class="form-select" id="productCategory" name="product-category" style="width:190px;">
+                                        <option value="1">Taban Plakaları</option>
+                                        <option value="2">Çerçeveler</option>
+                                        <option value="3">Lego Parçaları</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 82%; text-align:right; margin-top:4rem;">
+                            <button class="btn btn-lg btn-primary"> <span>Kaydet</span> </button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Product Modal -->
+        <div class="modal fade" id="productCreateModal" tabindex="-1" role="dialog" aria-labelledby="productCreateModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productCreateModalLabel">Yeni Ürün Ekle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" method="post" action="{{ route('product.create') }}">
+                        @csrf
+                        <div class="form-group">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">Ürün Fotoğrafı :</span>
+                                    </div>
+                                    <div class="custom-file mx-2">
+                                      <input type="file" class="custom-file-input" id="inputGroupFile01">
+                                    </div>
+                                  </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="basic-addon3">Ürün Adı : </span>
+                                    </div>
+                                    <input type="text" class="form-control" name="product-name" id="productName" placeholder=" Ürün Adı">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="basic-addon3">Ürün Fiyatı : </span>
+                                    </div>
+                                    <input type="number" class="form-control" name="product-price" id="productPrice">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="basic-addon3">Ürün Adedi : </span>
+                                    </div>
+                                    <input type="number" class="form-control"  name="product-count" id="productCount">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="basic-addon3">Ürün Durumu : </span>
+                                    </div>
+                                    <input type="number" class="form-control"  name="product-active" id="productActive">
+                                </div>
+                                
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon3">Kategori : </span>
+                                    </div>
+                                    <select class="form-select" id="productCategory" name="product-category" style="width:190px;">
+                                        <option value="1">Taban Plakaları</option>
+                                        <option value="2">Çerçeveler</option>
+                                        <option value="3">Lego Parçaları</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 82%; text-align:right; margin-top:4rem;">
+                            <button class="btn btn-lg btn-primary"> <span>Kaydet</span> </button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+
+         <!-- Add Category Modal -->
+         <div class="modal fade" id="categoryCreateModal" tabindex="-1" role="dialog" aria-labelledby="categoryCreateModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="categoryCreateModalLabel">Yeni Kategori Ekle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" method="post" action="{{ route('product.create') }}">
+                        @csrf
+                        <div class="form-group">
+                            <div class="col">
+                                
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="basic-addon3">Kategori Adı : </span>
+                                    </div>
+                                    <input type="text" class="form-control" name="category-name" id="categoryName" placeholder=" Kategori Adı">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 82%; text-align:right; margin-top:4rem;">
+                            <button class="btn btn-lg btn-primary"> <span>Kaydet</span> </button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+
         <div class="header pb-5 pt-2">
             <h1>Ürün Listesi</h1>
         </div>
 
         <div class="mb-5">
-            <button type="button" class="btn btn-lg btn-primary">Ürün Ekle <img src="storage/icons/plus-svgrepo-com.svg" width="25px" alt=""></button>
-            <button type="button" class="btn btn-lg btn-primary mx-5">Kategori Ekle <img src="storage/icons/plus-svgrepo-com.svg" width="25px" alt=""></button>
+            <button type="button" class="btn btn-lg btn-primary create-button">Ürün Ekle <img src="storage/icons/plus-svgrepo-com.svg" width="25px" alt=""></button>
+            <button type="button" class="btn btn-lg btn-primary mx-5 create-category-button">Kategori Ekle <img src="storage/icons/plus-svgrepo-com.svg" width="25px" alt=""></button>
         </div>
 
         <div class="filter py-1 d-flex flex-row">
@@ -474,7 +646,7 @@
                         <td class="text-success font-weight-bold">{{$product->is_active}}</td>
                         <td>{{$product->category->name}}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-sm"><img src="storage/icons/pencil-ui-svgrepo-com.svg" height="20px" alt="Güncelle"></button>
+                            <button type="button" class="btn btn-primary btn-sm edit-button" data-product-id="{{ $product->id }}"><img src="storage/icons/pencil-ui-svgrepo-com.svg" height="20px" alt="Güncelle"></button>
                             <button type="button" class="btn btn-danger btn-sm"> <img src="/storage/icons/garbage-trash-svgrepo-com.svg" height="20px" alt="Sil"></button>
                         </td>
                     </tr>
@@ -488,7 +660,25 @@
 
 
 <script>
+$(document).on('click', '.edit-button', function () {
+  
+    var productId = $(this).data('product-id');
+    $('#product_id').attr('value', productId);
+    document.getElementById("productId").value = productId;
+    $('#productUpdateModal').modal('show');
+});
 
+
+$(document).on('click', '.create-button', function () {
+  
+  $('#productCreateModal').modal('show');
+});
+
+
+$(document).on('click', '.create-category-button', function () {
+  
+  $('#categoryCreateModal').modal('show');
+});
 </script>
 
 </html>

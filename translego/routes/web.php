@@ -248,3 +248,19 @@ Route::get('/order/{id}/delete', function ($id) {
 
 })->name('order.delete');
 
+Route::post('/product-update', function (\Illuminate\Http\Request $request) {
+   
+    $order = \App\Models\Order::find($request->input('order-id'))->update(['status' => $request->input('order-status')]);
+    
+    return redirect()->back()->with('success', 'Başarıyla Güncellendi.');
+
+})->name('product.update');
+
+Route::post('/product-create', function (\Illuminate\Http\Request $request) {
+   
+    $product = new \App\Models\Product();
+
+    
+    return redirect()->back()->with('success', 'Başarıyla Güncellendi.');
+
+})->name('product.create');
