@@ -25,4 +25,18 @@ class OrderController extends Controller
         $orders= Order::get();
         return view('order-list', compact('orders'));
     }
+
+    public function getOrder($id){
+        
+        $order = Order::find($id);
+        return $order;
+    }
+
+    public function updateOrder(Request $request){
+        
+        $order = Order::find($request->input('order-id'));
+        $order->status = $request->input('order-status');
+        $order->save();
+        return redirect()->back()->with('success', 'Başarıyla Güncellendi.');
+    }
 }

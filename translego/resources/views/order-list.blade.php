@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title name="header">Sepet</title>
+    <title name="header">Siparişler</title>
 
     <!-- Fonts -->
 
@@ -400,6 +400,12 @@
         p {
             margin-bottom: 0 !important;
         }
+
+        .list-group-item span{
+            font-weight: 800;
+            color: black;
+            margin-right: 10px;
+        }
     </style>
 
     @vite(['resources/js/app.js'])
@@ -408,12 +414,99 @@
 
 <body class="antialiased">
     @include('layouts.header')
-
+    <?php $orderId = 3;  ?>
     <div class="container px-5 py-5">
 
         <div class="header pb-5 pt-2">
             <h1>Sipariş Listesi</h1>
         </div>
+
+          <!-- Edit Modal -->
+        <div class="modal fade" id="OrderUpdateModal" tabindex="-1" role="dialog" aria-labelledby="OrderUpdateModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="OrderUpdateModalLabel">Sipariş Düzenle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" method="post" action="{{ route('order.update') }}">
+                        @csrf
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <input type="hidden" name="order-id" id="orderId">
+                                <p class="text-primary mb-0 w-0">Sipariş Durumu</p>
+                                <select class="form-select" id="orderStatus" name="order-status" style="width:190px;">
+                                    <option value="0">Hazırlanıyor</option>
+                                    <option value="1">Kargoya Verildi</option>
+                                    <option value="2">Teslim Edildi</option>
+                                    <option value="3">İptal Edildi</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="width: 82%; text-align:right; margin-top:4rem;">
+                            <button class="btn btn-lg btn-primary"> <span>Kaydet</span> </button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Modal -->
+        {{-- <div class="modal fade" id="OrderViewModal" tabindex="-1" role="dialog" aria-labelledby="OrderViewModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="OrderViewModalLabel">Sipariş Bilgileri</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <?php 
+                        if($orderId == null){
+                            
+                            $order = \App\Models\Order::find(3);  
+                        }
+                        else{
+                            $order = \App\Models\Order::find($orderId);  
+                        }
+                    ?>
+                    <ul class="list-group">
+                        <li class="list-group-item" id="order-id"></li>
+                        <li class="list-group-item"><span class="font-weight-bold"> Sipariş Tarihi : </span>{{$order->created_at}}</li>
+                        <li class="list-group-item"><span class="font-weight-bold">Sipariş Durumu : </span>{{$order->status}}</li>
+                        <li class="list-group-item"><span class="font-weight-bold">Teslimat Adı : </span>{{$order->name}}</li>
+                        <li class="list-group-item"><span class="font-weight-bold">Teslimat Telefon Numarası : </span>{{$order->phone}}</li>
+                        <li class="list-group-item"><span class="font-weight-bold">Teslimat Adresi : </span>{{$order->address}}</li>
+                        <li class="list-group-item"><span class="font-weight-bold">Kargo Takibi : </span>{{$order->cargo_tracking}}</li>
+                      </ul>
+
+                      <h2 class="m-3">Sipariş İçeriği:</h2>
+                      @foreach($order->orderItems as $orderItem)
+                        @if($orderItem->item_type == 1)
+                            <?php $art = \App\Models\UserArt::find($orderItem->item_id);  ?>
+                            <ul class="list-group">
+                                <li class="list-group-item"><span class="font-weight-bold">Adı : </span>{{$art->name}}</li>
+                                <li class="list-group-item"><span class="font-weight-bold">Fiyatı : </span>{{$art->price}}</li>
+                              </ul>
+                        @else
+                            <?php $product = \App\Models\Product::find($orderItem->item_id);  ?>
+                            <ul class="list-group">
+                                <li class="list-group-item"><span class="font-weight-bold">Adı : </span>{{$product->name}}</li>
+                                <li class="list-group-item"><span class="font-weight-bold">Fiyatı : </span>{{$product->price}}</li>
+                                <li class="list-group-item"><span class="font-weight-bold">Adet : </span>{{$orderItem->count}}</li>
+                              </ul>
+                        @endif
+                        @endforeach
+
+                </div>
+                </div>
+            </div>
+        </div> --}}
 
         <div class="filter py-1 d-flex flex-row">
             <div class="input-group d-flex flex-column">
@@ -454,7 +547,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Sipariş No</th>
-                        <th scope="col">Müşteri Adı</th>
+                        <th scope="col">Kullanıcı Adı</th>
                         <th scope="col">Durumu</th>
                         <th scope="col">Tutarı</th>
                         <th scope="col">Eklenme Tarihi</th>
@@ -489,7 +582,32 @@
                         </td>
                     </tr>
                     @else
+                    <?php $product = \App\Models\Product::find($orderItem->item_id);  ?>
+                    <tr>
+                        <td class="text-primary font-weight-bold">#123456{{$order->id}}</td>
+                        <td>{{$order->user->name}}</td>
+                        <td class="font-weight-bold">
+                            @if($order->status == 0)
+                            <p class="text-primary">Hazırlanıyor</p>
+                            @elseif($order->status == 1)
+                            <p class="text-success">Kargoya Verildi</p>
+                            @elseif($order->status == 2)
+                            <p class="text-success">Teslim Edildi</p>
+                            @else
+                            <p class="text-danger">İptal Edildi</p>
+                            @endif
 
+                        </td>
+                        <td>{{ $product->price }} TL</td>
+                        <td>{{$order->created_at}}</td>
+                        <td>{{$order->updated_at}}</td>
+                        <td>
+                            <button type="button" class="btn btn-secondary btn-sm view-button" data-order-id="{{ $order->id }}"><img src="storage/icons/eye-svgrepo-com.svg" height="20px" alt="Göster"></button>
+                            <button type="button" class="btn btn-primary btn-sm edit-button" data-order-id="{{ $order->id }}"><img src="storage/icons/pencil-ui-svgrepo-com.svg" height="20px" alt="Güncelle"></button>
+                            <a class="btn btn-danger btn-sm" href="{{ route('order.delete', [$order->id]) }}"> <img src="/storage/icons/garbage-trash-svgrepo-com.svg" height="20px" alt="Sil"></a>
+                        </td>
+                    </tr>
+                    
                     @endif
 
                     @endforeach
@@ -499,11 +617,27 @@
 
         </div>
     </div>
+
 </body>
 
 
 <script>
+$(document).on('click', '.edit-button', function () {
+  
+    var orderId = $(this).data('order-id');
+    $('#order_id').attr('value', orderId);
+    document.getElementById("orderId").value = orderId;
+    $('#OrderUpdateModal').modal('show');
+});
 
+$(document).on('click', '.view-button', function () {
+  
+  var orderId = $(this).data('order-id');
+  $('#order_id').attr('value', orderId);
+  $orderId = orderId;
+  document.getElementById("order-id").textContent = orderId;
+  $('#OrderViewModal').modal('show');
+});
 </script>
 
 </html>

@@ -86,6 +86,9 @@
                 <li class="nav-item" style="padding: 0px 20px;">
                     <a class="nav-link" href="/#communication">İletişim</a>
                 </li>
+                <li class="nav-item" style="padding: 0px 20px;">
+                    <a class="nav-link" href="/ürünler">Market</a>
+                </li>
             </ul>
         </div>
         <div class="dropdown">

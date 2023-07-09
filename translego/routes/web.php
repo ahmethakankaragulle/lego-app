@@ -108,7 +108,9 @@ Route::get('/payment', function () {
 });
 
 Route::post('/kart-bilgileri', function (\Illuminate\Http\Request $request) {
-    $request->validate(
+    
+    if(session('address') == null){
+        $request->validate(
         [
             'full-name' => 'required|string|max:130|min:5',
             'telephone' => "required|starts_with:05|max:13|min:10",
@@ -119,14 +121,18 @@ Route::post('/kart-bilgileri', function (\Illuminate\Http\Request $request) {
             'telephone.required' => 'Telefon numarası alanı zorunludur.',
             'address.required' => 'Tam adres alanı zorunludur.',
         ]
-    );
+        );
 
-    session(['phone' => $request->input('telephone')]);
-    session(['name' => $request->input('full-name')]);
-    session(['address' => $request->input('address')]);
-
-    return view('payment');
-})->name('kart.bilgileri');
+        session(['phone' => $request->input('telephone')]);
+        session(['name' => $request->input('full-name')]);
+        session(['address' => $request->input('address')]);
+        
+        return view('payment');
+    }
+    else
+        return view('payment');
+    
+})->name('adres.onay');
 
 
 Route::post('/sepet-onay', function (\Illuminate\Http\Request $request) {
@@ -207,3 +213,38 @@ Route::post('/product/push', function (\Illuminate\Http\Request $request) {
     ]);
     return back()->with('success', 'Ürün Sepete Başarıyla Eklendi.');
 })->middleware('auth')->name('push-basket');
+
+
+Route::post('/order-update', function (\Illuminate\Http\Request $request) {
+   
+    $order = \App\Models\Order::find($request->input('order-id'))->update(['status' => $request->input('order-status')]);
+    
+    return redirect()->back()->with('success', 'Başarıyla Güncellendi.');
+
+})->name('order.update');
+
+Route::post('/product/push', function (\Illuminate\Http\Request $request) {
+
+    $count = 1;
+    if ($request->count != null) {
+        $count = $request->count;
+    }
+    auth()->user()->baskets()->create([
+        'user_id' => auth()->user()->id,
+        'item_id' => $request->product_id,
+        'item_type' => 2,
+        'count' => $count,
+    ]);
+    return back()->with('success', 'Ürün Sepete Başarıyla Eklendi.');
+})->middleware('auth')->name('push-basket');
+
+
+Route::get('/order/{id}/delete', function ($id) {
+    $order_items = \App\Models\OrderItem::where('order_id', $id)->delete();
+
+    $order = \App\Models\Order::find($id)->delete();
+    
+    return redirect()->back()->with('success', 'Başarıyla Silindi.');
+
+})->name('order.delete');
+
