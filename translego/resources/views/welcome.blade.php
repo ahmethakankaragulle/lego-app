@@ -737,6 +737,16 @@
                 </div>
             </div>
     </div>
+
+
+
+    @if(Session::has('success'))
+        <div id="successAlert" class="alert alert-success alert-dismissible fade show" role="alert" style="position: absolute; top:100px; width:90%">
+            {{ Session::get('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
 </div>
             
 
@@ -745,6 +755,12 @@
     </div>
     <script>
         initComparisons();
+        setTimeout(function() {
+        var successAlert = document.getElementById('successAlert');
+        if (successAlert) {
+            successAlert.remove();
+        }
+    }, 3000);
     </script>
     @livewireScripts
 </body>
